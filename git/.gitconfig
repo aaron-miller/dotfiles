@@ -18,3 +18,5 @@
 [user]
   name = Aaron Miller
   email = <$first_name> AT <$first_name> HYPEN <$last_name> DOT net
+[push]
+  default = simple
