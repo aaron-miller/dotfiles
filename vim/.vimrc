@@ -98,6 +98,12 @@ set smartcase
 set showmatch
 map <leader><space> :let @/=''<cr> " clear search
 
+"split navigations
+nnoremap <C-J> <C-W><C-J>
+nnoremap <C-K> <C-W><C-K>
+nnoremap <C-L> <C-W><C-L>
+nnoremap <C-H> <C-W><C-H>
+
 " Enable line highlighting
 let g:conoline_auto_enable = 1
 
