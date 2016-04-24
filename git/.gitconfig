@@ -1,0 +1,17 @@
+[alias]
+  # Show status
+  s = status
+
+  # List tags
+  tags = tag -l
+  
+  # List branches
+  branches = branch -a
+
+  # List remotes
+  remotes = remote -v
+[core]
+	editor = vim
+[user]
+	name = Aaron Miller
+	email = <first name> AT <first name> HYPEN <last name> DOT net
