@@ -11,7 +11,10 @@
   # List remotes
   remotes = remote -v
 [core]
-	editor = vim
+  editor = vim
+  excludesfile = /home/aaron/.gitignore-global
+  autocrlf = input
+  whitespace = trailing-space,space-before-tab,indent-with-non-tab
 [user]
-	name = Aaron Miller
-	email = <first name> AT <first name> HYPEN <last name> DOT net
+  name = Aaron Miller
+  email = <$first_name> AT <$first_name> HYPEN <$last_name> DOT net
