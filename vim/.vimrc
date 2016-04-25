@@ -9,16 +9,49 @@ set rtp+=~/.vim/bundle/Vundle.vim
 call vundle#begin()
 
 " Plugin 'VundleVim/Vundle.vim'
+
+"
+" Misc
+"
 Plugin 'tpope/vim-fugitive'
-Plugin 'rodjek/vim-puppet'
 Plugin 'scrooloose/syntastic'
-Plugin 'markcornick/vim-vagrant'
+Plugin 'ctrlpvim/ctrlp.vim'
 Plugin 'godlygeek/tabular'
-Plugin 'derekwyatt/vim-scala'
 Plugin 'Yggdroot/indentLine'
 Plugin 'Raimondi/delimitMate'
-Plugin 'ctrlpvim/ctrlp.vim'
+Plugin 'ervandew/supertab.git'
+Plugin 'bronson/vim-trailing-whitespace'
+Plugin 'airblade/vim-rooter'
+
+"
+" Snippets
+"
+Plugin 'SirVer/ultisnips'
+Plugin 'honza/vim-snippets'
+
+"
+" Colorschemes
+"
+Plugin 'jnurmine/Zenburn'
+Plugin 'altercation/vim-colors-solarized'
+
+"
+" Puppet
+"
+Plugin 'rodjek/vim-puppet'
+Plugin 'markcornick/vim-vagrant'
+
+"
+" Python
+"
+Plugin 'nvie/vim-flake8'
+
+"
+" JVM
+"
 Plugin 'tfnico/vim-gradle'
+Plugin 'derekwyatt/vim-scala'
+
 
 call vundle#end()
 
@@ -41,7 +74,7 @@ set number
 set ruler
 
 " Remove the toolbar
-set guioptions -=T
+" set guioptions -=T
 
 " Disable beep and flash
 set noerrorbells visualbell t_vb=
