@@ -20,6 +20,6 @@
   whitespace = trailing-space,space-before-tab,indent-with-non-tab
 [user]
   name = Aaron Miller
-  email = <$first_name> AT <$first_name> HYPEN <$last_name> DOT net
+  email = "(none)"
 [push]
   default = simple
