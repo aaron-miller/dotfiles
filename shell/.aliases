@@ -1,8 +1,3 @@
-alias ll='ls -alF'
-alias la='ls -A'
-alias l='ls -CF'
-alias upgrade="sudo apt-get update && sudo apt-get dist-upgrade -y"
-
 if [ -d ~/.openrc ]; then
   alias osprod='source ~/.openrc/prodops_stp1'
   alias osdev='source ~/.openrc/dev_stp1'
@@ -10,3 +5,5 @@ if [ -d ~/.openrc ]; then
   alias ostechops='source ~/.openrc/techops_stp1'
   alias ostools='source ~/.openrc/tools_admin'
 fi
+
+alias g='git'

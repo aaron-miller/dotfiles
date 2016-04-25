@@ -1,0 +1,25 @@
+[alias]
+  # Show status
+  s = status
+
+  # List tags
+  tags = tag -l
+  
+  # List branches
+  branches = branch -a
+
+  # List remotes
+  remotes = remote -v
+
+  co = commit
+  ca = commit -a
+[core]
+  editor = vim
+  excludesfile = /home/aaron/.gitignore-global
+  autocrlf = input
+  whitespace = trailing-space,space-before-tab,indent-with-non-tab
+[user]
+  name = Aaron Miller
+  email = <$first_name> AT <$first_name> HYPEN <$last_name> DOT net
+[push]
+  default = simple

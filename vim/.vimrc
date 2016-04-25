@@ -22,6 +22,7 @@ Plugin 'Raimondi/delimitMate'
 Plugin 'ervandew/supertab.git'
 Plugin 'bronson/vim-trailing-whitespace'
 Plugin 'airblade/vim-rooter'
+Plugin 'miyakogi/conoline.vim'
 
 "
 " Snippets
@@ -52,8 +53,13 @@ Plugin 'nvie/vim-flake8'
 Plugin 'tfnico/vim-gradle'
 Plugin 'derekwyatt/vim-scala'
 
-
 call vundle#end()
+
+" Set colorscheme to solarized
+colorscheme solarized
+
+" Set the background to dark
+set background=dark
 
 " Turn on syntax highlighting
 syntax on
@@ -62,7 +68,7 @@ syntax on
 filetype plugin indent on
 
 " TODO: Pick a leader key
-" let mapleader = ","
+let mapleader = ","
 
 " Security
 set modelines=0
@@ -72,9 +78,6 @@ set number
 
 " Show file stats
 set ruler
-
-" Remove the toolbar
-" set guioptions -=T
 
 " Disable beep and flash
 set noerrorbells visualbell t_vb=
@@ -126,6 +129,13 @@ set smartcase
 set showmatch
 map <leader><space> :let @/=''<cr> " clear search
 
-" Show quotes in json files
-" let g:indentLine_concealcursor = 'vc'
-" let g:indentLine_conceallevel = 0
+"split navigations
+nnoremap <C-J> <C-W><C-J>
+nnoremap <C-K> <C-W><C-K>
+nnoremap <C-L> <C-W><C-L>
+nnoremap <C-H> <C-W><C-H>
+
+" Enable line highlighting
+let g:conoline_auto_enable = 1
+
+let g:conoline_use_colorscheme_default_normal=1
