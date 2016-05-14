@@ -4,7 +4,7 @@
 
   # List tags
   tags = tag -l
-  
+
   # List branches
   branches = branch -a
 

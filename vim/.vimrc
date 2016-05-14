@@ -61,6 +61,12 @@ colorscheme solarized
 " Set the background to dark
 set background=dark
 
+" Enable fast tty
+set ttyfast
+
+" Enable lazy redraw so macros are cooler
+set lazyredraw
+
 " Turn on syntax highlighting
 syntax on
 

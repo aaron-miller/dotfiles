@@ -17,3 +17,6 @@ export LESS_TERMCAP_md="${yellow}";
 
 # Don’t clear the screen after quitting a manual page.
 export MANPAGER='less -X';
+
+# Install overcommit hooks by default
+export GIT_TEMPLATE_DIR=`overcommit --template-dir`

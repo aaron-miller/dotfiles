@@ -1,0 +1,22 @@
+PreCommit:
+  HardTabs:
+    enabled: true
+  JsonSyntax:
+    enabled: true
+    include:
+      - *.js
+      - *.json
+  Pep8:
+    enabled: true
+    include:
+      - *.py
+  PuppetLint:
+    enabled: true
+    include:
+      - *.pp
+  RubyLint:
+    enabled: true
+  TrailingWhitespace:
+    enabled: true
+  YamlSyntax:
+    enabled: true
