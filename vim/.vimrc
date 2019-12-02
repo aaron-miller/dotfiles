@@ -1,83 +1,14 @@
 " Don't try to be vi compatible
 set nocompatible
 
-" Helps force plugins to load correctly when it is turned back on below
-filetype off
-
-" Start Vundle stuff
-set rtp+=~/.vim/bundle/Vundle.vim
-call vundle#begin()
-
-" Plugin 'VundleVim/Vundle.vim'
-
-"
-" Misc
-"
-Plugin 'tpope/vim-fugitive'
-Plugin 'scrooloose/syntastic'
-Plugin 'ctrlpvim/ctrlp.vim'
-Plugin 'godlygeek/tabular'
-Plugin 'Yggdroot/indentLine'
-Plugin 'Raimondi/delimitMate'
-Plugin 'ervandew/supertab.git'
-Plugin 'bronson/vim-trailing-whitespace'
-Plugin 'airblade/vim-rooter'
-Plugin 'miyakogi/conoline.vim'
-
-"
-" Snippets
-"
-Plugin 'SirVer/ultisnips'
-Plugin 'honza/vim-snippets'
-
-"
-" Colorschemes
-"
-Plugin 'jnurmine/Zenburn'
-Plugin 'altercation/vim-colors-solarized'
-
-"
-" Puppet
-"
-Plugin 'rodjek/vim-puppet'
-Plugin 'markcornick/vim-vagrant'
-
-"
-" Python
-"
-Plugin 'nvie/vim-flake8'
-
-"
-" JVM
-"
-Plugin 'tfnico/vim-gradle'
-Plugin 'derekwyatt/vim-scala'
-
-call vundle#end()
-
-" Set colorscheme to solarized
-colorscheme solarized
-
-" Set the background to dark
-set background=dark
-
-" Enable fast tty
-set ttyfast
-
 " Enable lazy redraw so macros are cooler
 set lazyredraw
 
 " Turn on syntax highlighting
 syntax on
 
-" For plugins to load correctly
-filetype plugin indent on
-
 " TODO: Pick a leader key
 let mapleader = ","
-
-" Security
-set modelines=0
 
 " Show line numbers
 set number
