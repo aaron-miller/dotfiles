@@ -13,13 +13,7 @@
 
   co = commit
   ca = commit -a
-[core]
-  editor = vim
-  excludesfile = /home/aaron/.gitignore-global
-  autocrlf = input
-  whitespace = trailing-space,space-before-tab,indent-with-non-tab
 [user]
   name = Aaron Miller
   email = "aaron@aaron-miller.net"
-[push]
-  default = simple
+
