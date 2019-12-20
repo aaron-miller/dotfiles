@@ -1,3 +1,13 @@
+" Start vim-plug plugin declaration
+call plug#begin()
+
+" Colorschemes
+Plug 'junegunn/seoul256.vim'
+Plug 'vim-scripts/twilight256.vim'
+
+call plug#end()
+
+
 " Don't try to be vi compatible
 set nocompatible
 
@@ -6,6 +16,9 @@ set lazyredraw
 
 " Turn on syntax highlighting
 syntax on
+
+" Set colorscheme
+colorscheme twilight256
 
 " TODO: Pick a leader key
 let mapleader = ","
