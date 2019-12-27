@@ -4,9 +4,9 @@ call plug#begin()
 " Colorschemes
 Plug 'junegunn/seoul256.vim'
 Plug 'vim-scripts/twilight256.vim'
+Plug 'jaredgorski/spacecamp'
 
 call plug#end()
-
 
 " Don't try to be vi compatible
 set nocompatible
@@ -85,7 +85,3 @@ nnoremap <C-K> <C-W><C-K>
 nnoremap <C-L> <C-W><C-L>
 nnoremap <C-H> <C-W><C-H>
 
-" Enable line highlighting
-let g:conoline_auto_enable = 1
-
-let g:conoline_use_colorscheme_default_normal=1
