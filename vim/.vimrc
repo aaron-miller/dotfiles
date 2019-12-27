@@ -1,6 +1,9 @@
 " Start vim-plug plugin declaration
 call plug#begin()
 
+" General Plugins
+Plug 'tpope/vim-fugitive'
+
 " Colorschemes
 Plug 'junegunn/seoul256.vim'
 Plug 'vim-scripts/twilight256.vim'
