@@ -8,6 +8,7 @@ Plug 'tpope/vim-fugitive'
 Plug 'junegunn/seoul256.vim'
 Plug 'vim-scripts/twilight256.vim'
 Plug 'jaredgorski/spacecamp'
+Plug 'aonemd/kuroi.vim'
 
 call plug#end()
 
@@ -21,7 +22,7 @@ set lazyredraw
 syntax on
 
 " Set colorscheme
-colorscheme twilight256
+colorscheme kuroi
 
 " TODO: Pick a leader key
 let mapleader = ","
