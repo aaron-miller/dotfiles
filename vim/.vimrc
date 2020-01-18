@@ -10,6 +10,9 @@ Plug 'vim-scripts/twilight256.vim'
 Plug 'jaredgorski/spacecamp'
 Plug 'aonemd/kuroi.vim'
 
+" Language support
+Plug 'sheerun/vim-polyglot'
+
 call plug#end()
 
 " Don't try to be vi compatible
