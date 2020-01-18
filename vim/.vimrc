@@ -22,6 +22,7 @@ set lazyredraw
 syntax on
 
 " Set colorscheme
+set background=dark
 colorscheme kuroi
 
 " TODO: Pick a leader key
