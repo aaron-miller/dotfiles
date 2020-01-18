@@ -13,6 +13,9 @@ Plug 'aonemd/kuroi.vim'
 " Language support
 Plug 'sheerun/vim-polyglot'
 
+" Linting
+Plug 'dense-analysis/ale'
+
 call plug#end()
 
 " Don't try to be vi compatible
