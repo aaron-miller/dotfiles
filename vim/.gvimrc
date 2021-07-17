@@ -1,2 +1,2 @@
-set guifont=Menlo-Regular:h14
-set lines=120 columns=180
+set guifont=Menlo-Regular:h16
+set lines=60 columns=140

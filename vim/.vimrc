@@ -3,6 +3,10 @@ call plug#begin()
 
 " General Plugins
 Plug 'tpope/vim-fugitive'
+Plug 'junegunn/fzf', { 'do': { -> fzf#install() } }
+Plug 'junegunn/fzf.vim'
+Plug 'simeji/winresizer'
+Plug 'moll/vim-bbye'
 
 " Colorschemes
 Plug 'junegunn/seoul256.vim'
@@ -96,3 +100,12 @@ nnoremap <C-K> <C-W><C-K>
 nnoremap <C-L> <C-W><C-L>
 nnoremap <C-H> <C-W><C-H>
 
+" Set Ctrl + P to use fzf
+nmap <C-P> :FZF<CR>
+
+" save undo trees in files
+set undofile
+set undodir=~/.vim/undo
+
+" number of undo saved
+set undolevels=10000 
