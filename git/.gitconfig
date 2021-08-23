@@ -17,3 +17,5 @@
   name = Aaron Miller
   email = "aaron@aaron-miller.net"
 
+[init]
+	defaultBranch = main
