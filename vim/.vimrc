@@ -3,10 +3,12 @@ call plug#begin()
 
 " General Plugins
 Plug 'tpope/vim-fugitive'
-Plug 'junegunn/fzf', { 'do': { -> fzf#install() } }
-Plug 'junegunn/fzf.vim'
-Plug 'simeji/winresizer'
-Plug 'moll/vim-bbye'
+Plug 'tpope/vim-commentary'
+Plug 'tpope/vim-repeat'
+Plug 'tpope/vim-surround'
+
+Plug 'ackyshake/VimCompletesMe'
+Plug 'ludovicchabant/vim-gutentags'
 
 " Colorschemes
 Plug 'junegunn/seoul256.vim'
@@ -16,9 +18,7 @@ Plug 'aonemd/kuroi.vim'
 
 " Language support
 Plug 'sheerun/vim-polyglot'
-
-" Linting
-Plug 'dense-analysis/ale'
+Plug 'fatih/vim-go'
 
 call plug#end()
 
@@ -35,8 +35,10 @@ syntax on
 set background=dark
 colorscheme kuroi
 
-" TODO: Pick a leader key
 let mapleader = ","
+
+" Make the cursor blink less for the love of God
+set guicursor=n:blinkwait700-blinkon700-blinkoff350
 
 " Show line numbers
 set number

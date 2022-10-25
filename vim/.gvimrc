@@ -1,2 +1,5 @@
-set guifont=Menlo-Regular:h16
-set lines=60 columns=140
+set guifont=Hack:h14
+set lines=70 columns=170
+set guioptions+=k " set for smooth window resizing
+
+" TODO: Disable scrollbars
