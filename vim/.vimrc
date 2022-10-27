@@ -2,10 +2,12 @@
 call plug#begin()
 
 " General Plugins
-Plug 'tpope/vim-fugitive'
-Plug 'tpope/vim-commentary'
-Plug 'tpope/vim-repeat'
-Plug 'tpope/vim-surround'
+Plug 'tpope/vim-fugitive'   " Git from inside vim
+Plug 'tpope/vim-rhubarb'    " Adds GitHub support to all of fugitive's functions
+Plug 'tpope/vim-commentary' " bindings for controlling comments
+Plug 'tpope/vim-repeat'     " make . repeat everything
+Plug 'tpope/vim-surround'   " bindings for changing chars that surround '',(),etc.
+Plug 'tpope/vim-eunuch'     " :Delete, :Move, :Rename, :Chmod files in vim (and more!)
 
 Plug 'ackyshake/VimCompletesMe'
 Plug 'ludovicchabant/vim-gutentags'
