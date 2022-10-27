@@ -13,9 +13,6 @@ Plug 'ackyshake/VimCompletesMe'
 Plug 'ludovicchabant/vim-gutentags'
 
 " Colorschemes
-Plug 'junegunn/seoul256.vim'
-Plug 'vim-scripts/twilight256.vim'
-Plug 'jaredgorski/spacecamp'
 Plug 'aonemd/kuroi.vim'
 
 " Language support
