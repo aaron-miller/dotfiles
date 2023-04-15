@@ -13,9 +13,10 @@ return require('packer').startup(function(use)
 	-- tpope
 	use 'tpope/vim-fugitive'
 
-
+	-- other vimscript plugins
 	use 'mbbill/undotree'
 
+	-- Lua plugins
 	use {
 		'nvim-telescope/telescope.nvim', tag = '0.1.1',
 		-- or                            , branch = '0.1.x',
