@@ -68,10 +68,6 @@ set backspace=indent,eol,start
 set matchpairs+=<:> " use % to jump between pairs
 runtime! macros/matchit.vim
 
-" Move up/down editor lines
-nnoremap j gj
-nnoremap k gk
-
 " Allow hidden buffers
 set hidden
 
@@ -95,18 +91,53 @@ set smartcase
 set showmatch
 map <leader><space> :let @/=''<cr> " clear search
 
-"split navigations
-nnoremap <C-J> <C-W><C-J>
-nnoremap <C-K> <C-W><C-K>
-nnoremap <C-L> <C-W><C-L>
-nnoremap <C-H> <C-W><C-H>
-
-" Set Ctrl + P to use fzf
-nmap <C-P> :FZF<CR>
-
 " save undo trees in files
 set undofile
 set undodir=~/.vim/undo
 
 " number of undo saved
 set undolevels=10000 
+
+"*****************************************************************************
+"" Mappings
+"*****************************************************************************
+
+"" Git
+noremap <Leader>ga :Gwrite<CR>
+noremap <Leader>gc :Git commit --verbose<CR>
+noremap <Leader>gsh :Git push<CR>
+noremap <Leader>gll :Git pull<CR>
+noremap <Leader>gs :Git<CR>
+noremap <Leader>gb :Git blame<CR>
+noremap <Leader>gd :Gvdiffsplit<CR>
+noremap <Leader>gr :GRemove<CR>
+
+"" Open current line on GitHub
+nnoremap <Leader>o :.Gbrowse<CR>
+
+" Move up/down editor lines
+nnoremap j gj
+nnoremap k gk
+
+"split navigations
+nnoremap <C-J> <C-W><C-J>
+nnoremap <C-K> <C-W><C-K>
+nnoremap <C-L> <C-W><C-L>
+nnoremap <C-H> <C-W><C-H>
+
+" session management - TODO: Use vim's session management instead
+nnoremap <leader>so :OpenSession<Space>
+nnoremap <leader>ss :SaveSession<Space>
+nnoremap <leader>sd :DeleteSession<CR>
+nnoremap <leader>sc :CloseSession<CR>
+
+"" Buffer nav
+noremap <leader>q :bp<CR>
+noremap <leader>w :bn<CR>
+
+"" Close buffer
+noremap <leader>c :bd<CR>
+
+"" Clean search (highlight)
+nnoremap <silent> <leader><space> :noh<cr>
+

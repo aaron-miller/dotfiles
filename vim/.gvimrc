@@ -1,5 +1,5 @@
 " I may need to make this configurable based on the system I am using...
-set guifont="Hack 12"
+set guifont="Hack 14"
 
 set lines=60 columns=170
 
