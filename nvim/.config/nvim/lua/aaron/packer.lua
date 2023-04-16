@@ -1,6 +1,3 @@
--- This file can be loaded by calling `lua require('plugins')` from your init.vim
-
--- Only required if you have packer configured as `opt`
 vim.cmd [[packadd packer.nvim]]
 
 return require('packer').startup(function(use)
@@ -11,15 +8,14 @@ return require('packer').startup(function(use)
 	use 'folke/tokyonight.nvim'
 
 	-- tpope
-	use 'tpope/vim-fugitive'
-	use 'tpope/vim-rhubarb'
-	use 'tpope/vim-speeddating'
-	use 'tpope/vim-sleuth'
-	use 'tpope/vim-obsession'
-	use 'tpope/vim-repeat'
-	use 'tpope/vim-surround'
-	use 'tpope/vim-commentary'
-	use 'tpope/vim-eunuch'
+	use 'tpope/vim-fugitive'	-- Git
+	use 'tpope/vim-rhubarb'		-- GitHub
+	use 'tpope/vim-speeddating'	-- Increase/decrease dates
+	use 'tpope/vim-sleuth'		-- Figure out file indent settings
+	use 'tpope/vim-obsession'	-- session management manager
+	use 'tpope/vim-repeat'		-- super power .
+	use 'tpope/vim-surround'	-- change surrounding chars like parens and quotes
+	use 'tpope/vim-commentary'	-- comment out a line with gc
 
 	-- other vimscript plugins
 	use 'mbbill/undotree'
