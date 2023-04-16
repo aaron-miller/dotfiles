@@ -1,4 +1,4 @@
-local ts_builtin = require('telescope.builtin')
+local telescope = require('telescope.builtin')
 
 vim.g.mapleader = " "
 
@@ -19,12 +19,12 @@ vim.keymap.set("n", "<leader>sc", ":noh<CR>", {noremap = true})
 vim.keymap.set("n", "<leader>pv", vim.cmd.Explore)
 
 -- Telescope
-vim.keymap.set('n', '<leader>ff', ts_builtin.find_files, {})
-vim.keymap.set('n', '<leader>fg', ts_builtin.live_grep, {})
-vim.keymap.set('n', '<leader>fb', ts_builtin.buffers, {})
-vim.keymap.set('n', '<leader>fh', ts_builtin.help_tags, {})
+vim.keymap.set('n', '<leader>ff', telescope.find_files, {})
+vim.keymap.set('n', '<leader>fg', telescope.live_grep, {})
+vim.keymap.set('n', '<leader>fb', telescope.buffers, {})
+vim.keymap.set('n', '<leader>fh', telescope.help_tags, {})
 
-vim.keymap.set('n', '<C-p>', ts_builtin.git_files, {})
+vim.keymap.set('n', '<C-p>', telescope.git_files, {})
 
 -- Fugitive/Git/GitHub
 vim.keymap.set("n", "<leader>gs", vim.cmd.Git)
