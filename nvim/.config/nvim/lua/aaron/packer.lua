@@ -12,14 +12,14 @@ return require('packer').startup(function(use)
 
 	-- tpope
 	use 'tpope/vim-fugitive'
-    use 'tpope/vim-rhubarb'
-    use 'tpope/vim-speeddating'
-    use 'tpope/vim-sleuth'
-    use 'tpope/vim-obsession'
-    use 'tpope/vim-repeat'
-    use 'tpope/vim-surround'
-    use 'tpope/vim-commentary'
-    use 'tpope/vim-eunuch'
+	use 'tpope/vim-rhubarb'
+	use 'tpope/vim-speeddating'
+	use 'tpope/vim-sleuth'
+	use 'tpope/vim-obsession'
+	use 'tpope/vim-repeat'
+	use 'tpope/vim-surround'
+	use 'tpope/vim-commentary'
+	use 'tpope/vim-eunuch'
 
 	-- other vimscript plugins
 	use 'mbbill/undotree'
@@ -50,15 +50,15 @@ return require('packer').startup(function(use)
 			'williamboman/mason.nvim',
 			run = function()
 				pcall(vim.cmd, 'MasonUpdate')
-            end,
-        },
-        {'williamboman/mason-lspconfig.nvim'}, -- Optional
+			end,
+		},
+		{'williamboman/mason-lspconfig.nvim'}, -- Optional
 
-        -- Autocompletion
-        {'hrsh7th/nvim-cmp'},     -- Required
-        {'hrsh7th/cmp-nvim-lsp'}, -- Required
-        {'L3MON4D3/LuaSnip'},     -- Required
-    }
+		-- Autocompletion
+		{'hrsh7th/nvim-cmp'},     -- Required
+		{'hrsh7th/cmp-nvim-lsp'}, -- Required
+		{'L3MON4D3/LuaSnip'},     -- Required
+	}
 }
 
 end)
