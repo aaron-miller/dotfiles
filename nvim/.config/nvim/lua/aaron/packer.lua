@@ -19,6 +19,7 @@ return require('packer').startup(function(use)
     use 'tpope/vim-repeat'
     use 'tpope/vim-surround'
     use 'tpope/vim-commentary'
+    use 'tpope/vim-eunuch'
 
 	-- other vimscript plugins
 	use 'mbbill/undotree'
