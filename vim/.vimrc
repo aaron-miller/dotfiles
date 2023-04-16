@@ -10,7 +10,6 @@ Plug 'tpope/vim-surround'   " bindings for changing chars that surround '',(),et
 Plug 'tpope/vim-eunuch'     " :Delete, :Move, :Rename, :Chmod files in vim (and more!)
 
 Plug 'ackyshake/VimCompletesMe'
-Plug 'ludovicchabant/vim-gutentags'
 
 " Colorschemes
 Plug 'aonemd/kuroi.vim'
