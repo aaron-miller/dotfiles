@@ -22,6 +22,19 @@ return require('packer').startup(function(use)
 
     -- Lua plugins
     use {
+        'nvim-lualine/lualine.nvim',
+        requires = {'nvim-tree/nvim-web-devicons', opt = true}
+    }
+
+    use {
+        'nvim-tree/nvim-tree.lua',
+        requires = {
+            'nvim-tree/nvim-web-devicons' -- optional
+        },
+        config = function() require("nvim-tree").setup {} end
+    }
+
+    use {
         'nvim-telescope/telescope.nvim',
         tag = '0.1.1',
         -- or                            , branch = '0.1.x',
@@ -53,25 +66,19 @@ return require('packer').startup(function(use)
             {'hrsh7th/nvim-cmp'}, -- Required
             {'hrsh7th/cmp-nvim-lsp'}, -- Required
             {'L3MON4D3/LuaSnip'} -- Required
-        },
-
-        use {
-            'nvim-lualine/lualine.nvim',
-            requires = {'nvim-tree/nvim-web-devicons', opt = true}
         }
-
     }
 
     -- Snippets
     use "rafamadriz/friendly-snippets"
 
-	use({
-		"L3MON4D3/LuaSnip",
-		-- follow latest release.
-		tag = "v<CurrentMajor>.*",
-		-- install jsregexp (optional!:).
-		run = "make install_jsregexp"
-	})
+    use({
+        "L3MON4D3/LuaSnip",
+        -- follow latest release.
+        tag = "v<CurrentMajor>.*",
+        -- install jsregexp (optional!:).
+        run = "make install_jsregexp"
+    })
 
 end)
 
