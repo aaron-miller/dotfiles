@@ -20,10 +20,11 @@ vim.keymap.set("n", "<leader>sc", ":noh<CR>", {noremap = true})
 vim.keymap.set("n", "<leader>pv", vim.cmd.Explore, {noremap = true})
 
 -- Telescope
-vim.keymap.set('n', '<leader>ff', telescope.find_files,{noremap = true})
-vim.keymap.set('n', '<leader>fg', telescope.live_grep,{noremap = true})
-vim.keymap.set('n', '<leader>fb', telescope.buffers,{noremap = true})
-vim.keymap.set('n', '<leader>fh', telescope.help_tags,{noremap = true})
+vim.keymap.set('n', '<leader>ff', telescope.find_files, {noremap = true})
+vim.keymap.set('n', '<leader>fg', telescope.live_grep, {noremap = true})
+vim.keymap.set('n', '<leader>fb', telescope.buffers, {noremap = true})
+vim.keymap.set('n', '<leader>fh', telescope.help_tags, {noremap = true})
+vim.keymap.set('n', '<leader>ft', telescope.tags, {noremap = true})
 
 vim.keymap.set('n', '<C-p>', telescope.git_files, {})
 
@@ -33,6 +34,7 @@ vim.keymap.set("n", "<leader>ga", vim.cmd.Gwrite)
 vim.keymap.set("n", "<leader>gh", ':Git push<CR>')
 vim.keymap.set("n", "<leader>gl", ':Git pull<CR>')
 vim.keymap.set("n", "<leader>gb", ':Git blame<CR>')
+vim.keymap.set("n", "<leader>go", ':Git log<CR>')
 vim.keymap.set("n", "<leader>gV", ':Gvdiffsplit<CR>')
 vim.keymap.set("n", "<leader>gO", ':GBrowse<CR>')
 
