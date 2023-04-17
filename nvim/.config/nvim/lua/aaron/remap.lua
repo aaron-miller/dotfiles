@@ -38,3 +38,7 @@ vim.keymap.set("n", "<leader>gO", ':GBrowse<CR>')
 
 -- undotree
 vim.keymap.set("n", "<leader>u", vim.cmd.UndotreeToggle)
+
+-- nvim-tree
+vim.keymap.set("n", "<leader>pt", ':NvimTreeToggle<CR>')
+vim.keymap.set("n", "<leader>pf", ':NvimTreeFindFile<CR>')
