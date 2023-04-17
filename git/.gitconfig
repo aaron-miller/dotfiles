@@ -1,25 +1,27 @@
 [alias]
-  s = status
-  f = fetch -a -p
-  l = pull
-  lr = pull --rebase
-  h = push
-  st = stash
-  co = commit
-  ca = commit -a
+	s = status
+	f = fetch -a -p
+	l = pull
+	lr = pull --rebase
+	h = push
+	st = stash
+	co = commit
+	ca = commit -a
 
   # List tags
-  tags = tag -l
+	tags = tag -l
 
   # List branches
-  branches = branch -a
+	branches = branch -a
 
   # List remotes
-  remotes = remote -v
+	remotes = remote -v
 
 [user]
-  name = Aaron Miller
-  email = "aaron@aaron-miller.net"
+	name = Aaron Miller
+	email = "aaron@aaron-miller.net"
 
 [init]
-  defaultBranch = main
+	defaultBranch = main
+[push]
+	autoSetupRemote = true
