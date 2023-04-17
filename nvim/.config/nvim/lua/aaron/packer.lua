@@ -8,14 +8,14 @@ return require('packer').startup(function(use)
     use 'folke/tokyonight.nvim'
 
     -- tpope
-    use 'tpope/vim-fugitive' -- Git
-    use 'tpope/vim-rhubarb' -- GitHub
+    use 'tpope/vim-fugitive'    -- Git
+    use 'tpope/vim-rhubarb'     -- GitHub
     use 'tpope/vim-speeddating' -- Increase/decrease dates
-    use 'tpope/vim-sleuth' -- Figure out file indent settings
-    use 'tpope/vim-obsession' -- session management manager
-    use 'tpope/vim-repeat' -- super power .
-    use 'tpope/vim-surround' -- change surrounding chars like parens and quotes
-    use 'tpope/vim-commentary' -- comment out a line with gc
+    use 'tpope/vim-sleuth'      -- Figure out file indent settings
+    use 'tpope/vim-obsession'   -- session management manager
+    use 'tpope/vim-repeat'      -- super power .
+    use 'tpope/vim-surround'    -- change surrounding chars like parens and quotes
+    use 'tpope/vim-commentary'  -- comment out a line with gc
 
     -- other vimscript plugins
     use 'mbbill/undotree'
