@@ -7,6 +7,7 @@ vim.keymap.set("n", "<leader>c", ':bd<CR>', {noremap = true})
 vim.keymap.set("n", "<leader>w", ':w<CR>', {noremap = true})
 vim.keymap.set("n", "<leader>q", ':q<CR>', {noremap = true})
 vim.keymap.set("n", "<leader>Q", ':q!<CR>', {noremap = true})
+vim.keymap.set("n", "<leader><Tab>", '<C-^>', {noremap = true})
 
 vim.keymap.set("n", "<C-J>", "<C-W><C-J>")
 vim.keymap.set("n", "<C-K>", "<C-W><C-K>")
