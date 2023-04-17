@@ -9,4 +9,4 @@ My personal dotfiles to be used with GNU Stow.
 
 1. `git clone https://github.com/aaron-miller/dotfiles.git ~/.dotfiles`
 2. `cd ~/.dotfiles`
-3. Link an app: `stow <dir>` or install everything: `for app in $(ls -d */ | sed 's;/;;g'); do stow $app; done`
+3. Link an app using `stow <dir>`
