@@ -1,6 +1,12 @@
 [alias]
-  # Show status
   s = status
+  f = fetch -a -p
+  l = pull
+  lr = pull --rebase
+  h = push
+  st = stash
+  co = commit
+  ca = commit -a
 
   # List tags
   tags = tag -l
@@ -11,11 +17,9 @@
   # List remotes
   remotes = remote -v
 
-  co = commit
-  ca = commit -a
 [user]
   name = Aaron Miller
   email = "aaron@aaron-miller.net"
 
 [init]
-	defaultBranch = main
+  defaultBranch = main
