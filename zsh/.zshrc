@@ -1,5 +1,3 @@
-export PATH="/Users/amill248/bin:$PATH"
-
 # Load Homebrew shell completion
 if type brew &>/dev/null; then
   FPATH=$(brew --prefix)/share/zsh/site-functions:$FPATH
@@ -13,7 +11,8 @@ alias ll="ls -lG"
 alias lla="ls -laG"
 alias la="la -aG"
 
+alias g="git"
+
 alias k="kubectl"
 alias ktx="kubectx"
 alias kns="kubens"
-
