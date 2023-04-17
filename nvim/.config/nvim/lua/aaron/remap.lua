@@ -44,22 +44,28 @@ vim.keymap.set("n", "<leader>gO", ':GBrowse<CR>')
 vim.keymap.set("n", "<leader>u", vim.cmd.UndotreeToggle)
 
 -- LSP
---
--- local opts = { buffer = ev.buf }
---     vim.keymap.set('n', 'gD', vim.lsp.buf.declaration, opts)
---     vim.keymap.set('n', 'gd', vim.lsp.buf.definition, opts)
---     vim.keymap.set('n', 'K', vim.lsp.buf.hover, opts)
---     vim.keymap.set('n', 'gi', vim.lsp.buf.implementation, opts)
---     vim.keymap.set('n', '<C-k>', vim.lsp.buf.signature_help, opts)
---     vim.keymap.set('n', '<space>wa', vim.lsp.buf.add_workspace_folder, opts)
---     vim.keymap.set('n', '<space>wr', vim.lsp.buf.remove_workspace_folder, opts)
---     vim.keymap.set('n', '<space>wl', function()
---       print(vim.inspect(vim.lsp.buf.list_workspace_folders()))
---     end, opts)
---     vim.keymap.set('n', '<space>D', vim.lsp.buf.type_definition, opts)
---     vim.keymap.set('n', '<space>rn', vim.lsp.buf.rename, opts)
---     vim.keymap.set({ 'n', 'v' }, '<space>ca', vim.lsp.buf.code_action, opts)
---     vim.keymap.set('n', 'gr', vim.lsp.buf.references, opts)
---     vim.keymap.set('n', '<space>f', function()
---       vim.lsp.buf.format { async = true }
---     end, opts)
+-- * `K`: Displays hover information about the symbol under the cursor in a floating window. `vim.lsp.buf.hover().`
+-- * `gd`: Jumps to the definition of the symbol under the cursor. `vim.lsp.buf.definition().`
+-- * `gD`: Jumps to the declaration of the symbol under the cursor. Some servers don't implement this feature. `vim.lsp.buf.declaration().`
+-- * `gi`: Lists all the implementations for the symbol under the cursor in the quickfix window. `vim.lsp.buf.implementation().`
+-- * `go`: Jumps to the definition of the type of the symbol under the cursor. `vim.lsp.buf.type_definition().`
+-- * `gr`: Lists all the references to the symbol under the cursor in the quickfix window. `vim.lsp.buf.references().`
+-- * `gs`: Displays signature information about the symbol under the cursor in a floating window. `vim.lsp.buf.signature_help(). If a mapping already exists for this key this function is not bound.`
+-- * `<F2>`: Renames all references to the symbol under the cursor. `vim.lsp.buf.rename().`
+-- * `<F3>`: Format code in current buffer. `vim.lsp.buf.format().`
+-- * `<F4>`: Selects a code action available at the current cursor position. `vim.lsp.buf.code_action().`
+-- * `gl`: Show diagnostics in a floating window. `vim.diagnostic.open_float().`
+-- * `d`: Move to the previous diagnostic in the current buffer. `vim.diagnostic.goto_prev().`
+-- * `d`: Move to the next diagnostic. `vim.diagnostic.goto_next().`
+
+
+-- Completion
+-- * `<Ctrl-y>`: Confirms selection.
+-- * `<Ctrl-e>`: Cancel completion.
+-- * `<Down>`: Navigate to the next item on the list.
+-- * `<Up>`: Navigate to previous item on the list.
+-- * `<Ctrl-n>`: If the completion menu is visible, go to the next item. Else, trigger completion menu.
+-- * `<Ctrl-p>`: If the completion menu is visible, go to the previous item. Else, trigger completion menu.
+-- * `<Ctrl-d>`: Scroll down the documentation window.
+-- * `<Ctrl-u>`: Scroll up the documentation window.
+
