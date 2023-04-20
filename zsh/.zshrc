@@ -22,6 +22,8 @@ alias gpr="git pull --rebase"
 alias gf="git fetch --all"
 alias gfp="git fetch --all --prune"
 alias gr="git rebase -i"
+alias gro="git rebase -i origin/main"
+alias grom="git rebase -i origin/master"
 
 alias k="kubectl"
 alias ktx="kubectx"
