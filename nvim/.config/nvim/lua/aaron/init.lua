@@ -14,3 +14,4 @@ vim.opt.incsearch = true
 vim.opt.ignorecase = true
 vim.opt.smartcase = true
 vim.opt.showmatch = true
+vim.opt.scrolloff = 4
