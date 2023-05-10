@@ -32,6 +32,7 @@ vim.keymap.set('n', '<C-p>', telescope.git_files)
 -- Fugitive/Git/GitHub
 vim.keymap.set("n", "<leader>gs", vim.cmd.Git)
 vim.keymap.set("n", "<leader>ga", vim.cmd.Gwrite)
+vim.keymap.set("n", "<leader>gA", ':Git commit -a<CR>')
 vim.keymap.set("n", "<leader>gC", ':Git commit<CR>')
 vim.keymap.set("n", "<leader>gh", ':Git push<CR>')
 vim.keymap.set("n", "<leader>gl", ':Git pull<CR>')
