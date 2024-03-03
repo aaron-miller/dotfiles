@@ -1,0 +1,14 @@
+live_config_reload = true
+
+[window]
+resize_increments = true
+#blur = true
+#opacity = 0.8
+
+[window.dimensions]
+columns = 130
+lines = 42
+
+[font]
+normal.family = "Hack Nerd Font"
+size = 16
