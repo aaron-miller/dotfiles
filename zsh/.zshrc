@@ -3,11 +3,6 @@ if type brew &>/dev/null; then
   FPATH=$(brew --prefix)/share/zsh/site-functions:$FPATH
 fi
 
-export GOPATH=$HOME/.go
-export PATH=$PATH:$GOROOT/bin:$GOPATH/bin
-
-export PATH="$PATH:$HOME/.local/bin"
-
 # Create a minimal prompt
 export PS1="%~ %% "
 
