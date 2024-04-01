@@ -1,72 +1,28 @@
-local telescope = require('telescope.builtin')
+-- Diagnostic keymaps
+vim.keymap.set("n", "[d", vim.diagnostic.goto_prev, { desc = "Go to previous [D]iagnostic message" })
+vim.keymap.set("n", "]d", vim.diagnostic.goto_next, { desc = "Go to next [D]iagnostic message" })
+vim.keymap.set("n", "<leader>e", vim.diagnostic.open_float, { desc = "Show diagnostic [E]rror messages" })
+vim.keymap.set("n", "<leader>q", vim.diagnostic.setloclist, { desc = "Open diagnostic [Q]uickfix list" })
 
-vim.g.mapleader = " "
+-- Exit terminal mode in the builtin terminal with a shortcut that is a bit easier
+-- for people to discover. Otherwise, you normally need to press <C-\><C-n>, which
+-- is not what someone will guess without a bit more experience.
+--
+-- NOTE: This won't work in all terminal emulators/tmux/etc. Try your own mapping
+-- or just use <C-\><C-n> to exit terminal mode
+vim.keymap.set("t", "<Esc><Esc>", "<C-\\><C-n>", { desc = "Exit terminal mode" })
 
--- standard vim features
-vim.keymap.set("n", "<leader>c", ':bd<CR>')
-vim.keymap.set("n", "<leader>w", ':w<CR>')
-vim.keymap.set("n", "<leader>W", ':wq<CR>')
-vim.keymap.set("n", "<leader>q", ':q<CR>')
-vim.keymap.set("n", "<leader>Q", ':q!<CR>')
-vim.keymap.set("n", "<leader><Tab>", '<C-^>')
+-- TIP: Disable arrow keys in normal mode
+-- vim.keymap.set('n', '<left>', '<cmd>echo "Use h to move!!"<CR>')
+-- vim.keymap.set('n', '<right>', '<cmd>echo "Use l to move!!"<CR>')
+-- vim.keymap.set('n', '<up>', '<cmd>echo "Use k to move!!"<CR>')
+-- vim.keymap.set('n', '<down>', '<cmd>echo "Use j to move!!"<CR>')
 
-vim.keymap.set("n", "<C-J>", "<C-W><C-J>")
-vim.keymap.set("n", "<C-K>", "<C-W><C-K>")
-vim.keymap.set("n", "<C-L>", "<C-W><C-L>")
-vim.keymap.set("n", "<C-H>", "<C-W><C-H>")
-
-vim.keymap.set("n", "<leader>sc", ":noh<CR>")
-
--- netrw
-vim.keymap.set("n", "<leader>pv", vim.cmd.Explore)
-
--- Telescope
-vim.keymap.set('n', '<leader>pf', telescope.find_files)
-vim.keymap.set('n', '<leader>pg', telescope.live_grep)
-vim.keymap.set('n', '<leader>pb', telescope.buffers)
-vim.keymap.set('n', '<leader>ph', telescope.help_tags)
-vim.keymap.set('n', '<leader>pt', telescope.tags)
-
-vim.keymap.set('n', '<C-p>', telescope.git_files)
-
--- Fugitive/Git/GitHub
-vim.keymap.set("n", "<leader>gs", vim.cmd.Git)
-vim.keymap.set("n", "<leader>ga", vim.cmd.Gwrite)
-vim.keymap.set("n", "<leader>gA", ':Git commit -a<CR>')
-vim.keymap.set("n", "<leader>gC", ':Git commit<CR>')
-vim.keymap.set("n", "<leader>gh", ':Git push<CR>')
-vim.keymap.set("n", "<leader>gl", ':Git pull<CR>')
-vim.keymap.set("n", "<leader>gb", ':Git blame<CR>')
-vim.keymap.set("n", "<leader>go", ':Git log<CR>')
-vim.keymap.set("n", "<leader>gV", ':Gvdiffsplit<CR>')
-vim.keymap.set("n", "<leader>gO", ':GBrowse<CR>')
-
--- undotree
-vim.keymap.set("n", "<leader>u", vim.cmd.UndotreeToggle)
-
--- LSP
--- * `K`: Displays hover information about the symbol under the cursor in a floating window. `vim.lsp.buf.hover().`
--- * `gd`: Jumps to the definition of the symbol under the cursor. `vim.lsp.buf.definition().`
--- * `gD`: Jumps to the declaration of the symbol under the cursor. Some servers don't implement this feature. `vim.lsp.buf.declaration().`
--- * `gi`: Lists all the implementations for the symbol under the cursor in the quickfix window. `vim.lsp.buf.implementation().`
--- * `go`: Jumps to the definition of the type of the symbol under the cursor. `vim.lsp.buf.type_definition().`
--- * `gr`: Lists all the references to the symbol under the cursor in the quickfix window. `vim.lsp.buf.references().`
--- * `gs`: Displays signature information about the symbol under the cursor in a floating window. `vim.lsp.buf.signature_help(). If a mapping already exists for this key this function is not bound.`
--- * `<F2>`: Renames all references to the symbol under the cursor. `vim.lsp.buf.rename().`
--- * `<F3>`: Format code in current buffer. `vim.lsp.buf.format().`
--- * `<F4>`: Selects a code action available at the current cursor position. `vim.lsp.buf.code_action().`
--- * `gl`: Show diagnostics in a floating window. `vim.diagnostic.open_float().`
--- * `d`: Move to the previous diagnostic in the current buffer. `vim.diagnostic.goto_prev().`
--- * `d`: Move to the next diagnostic. `vim.diagnostic.goto_next().`
-
-
--- Completion
--- * `<Ctrl-y>`: Confirms selection.
--- * `<Ctrl-e>`: Cancel completion.
--- * `<Down>`: Navigate to the next item on the list.
--- * `<Up>`: Navigate to previous item on the list.
--- * `<Ctrl-n>`: If the completion menu is visible, go to the next item. Else, trigger completion menu.
--- * `<Ctrl-p>`: If the completion menu is visible, go to the previous item. Else, trigger completion menu.
--- * `<Ctrl-d>`: Scroll down the documentation window.
--- * `<Ctrl-u>`: Scroll up the documentation window.
-
+-- Keybinds to make split navigation easier.
+--  Use CTRL+<hjkl> to switch between windows
+--
+--  See `:help wincmd` for a list of all window commands
+vim.keymap.set("n", "<C-h>", "<C-w><C-h>", { desc = "Move focus to the left window" })
+vim.keymap.set("n", "<C-l>", "<C-w><C-l>", { desc = "Move focus to the right window" })
+vim.keymap.set("n", "<C-j>", "<C-w><C-j>", { desc = "Move focus to the lower window" })
+vim.keymap.set("n", "<C-k>", "<C-w><C-k>", { desc = "Move focus to the upper window" })
