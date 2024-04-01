@@ -10,10 +10,15 @@ end ---@diagnostic disable-next-line: undefined-field
 vim.opt.rtp:prepend(lazypath)
 
 require("lazy").setup({
-	"tpope/vim-sleuth", -- Detect tabstop and shiftwidth automatically
-
-	-- "gc" to comment visual regions/lines
-	{ "numToStr/Comment.nvim", opts = {} },
+	-- tpope
+	"tpope/vim-fugitive", -- Git
+	"tpope/vim-rhubarb", -- GitHub
+	"tpope/vim-speeddating", -- Increase/decrease dates
+	"tpope/vim-sleuth", -- Figure out file indent settings
+	"tpope/vim-obsession", -- session management manager
+	"tpope/vim-repeat", -- super power .
+	"tpope/vim-surround", -- change surrounding chars like parens and quotes
+	"tpope/vim-commentary", -- comment out a line with gc
 
 	-- See `:help gitsigns` to understand what the configuration keys do
 	{ -- Adds git related signs to the gutter, as well as utilities for managing changes
@@ -556,7 +561,17 @@ require("lazy").setup({
 		"nvim-treesitter/nvim-treesitter",
 		build = ":TSUpdate",
 		opts = {
-			ensure_installed = { "bash", "c", "html", "lua", "luadoc", "markdown", "vim", "vimdoc" },
+			ensure_installed = {
+				"bash",
+				"c",
+				"html",
+				"python",
+				"lua",
+				"luadoc",
+				"markdown",
+				"vim",
+				"vimdoc",
+			},
 			-- Autoinstall languages that are not installed
 			auto_install = true,
 			highlight = {
