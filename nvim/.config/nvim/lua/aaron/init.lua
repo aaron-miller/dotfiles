@@ -71,4 +71,3 @@ vim.keymap.set("n", "<Esc>", "<cmd>nohlsearch<CR>")
 
 require("aaron.remap")
 require("aaron.autocmd")
-require("aaron.plugins")
