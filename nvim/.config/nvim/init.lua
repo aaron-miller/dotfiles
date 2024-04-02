@@ -618,7 +618,14 @@ require("lazy").setup({
 		end,
 	},
 	"preservim/vimux", -- run a temp terminal in tmux via vim
-	"vim-test/vim-test", -- run tests inside of vim, using vimux's temp terminals
+	{
+		"vim-test/vim-test", -- run tests inside of vim, using vimux's temp terminals
+		config = function()
+			vim.keymap.set("n", "<leader>tt", ":TestNearest<CR>", { desc = "[T]est" })
+			vim.keymap.set("n", "<leader>tf", ":TestFile<CR>", { desc = "[T]est" })
+			vim.keymap.set("n", "<leader>ta", ":TestFile<CR>", { desc = "[T]est" })
+		end,
+	},
 
 	-- The following two comments only work if you have downloaded the kickstart repo, not just copy pasted the
 	-- init.lua. If you want these files, they are in the repository, so you can just download them and
