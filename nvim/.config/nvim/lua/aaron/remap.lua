@@ -1,6 +1,6 @@
 vim.keymap.set("n", "<leader>c", ":bd<CR>", { desc = "[C]lose buffer (:bd)" })
 vim.keymap.set("n", "<leader>w", ":w<CR>", { desc = "[w]rite buffer (:w)" })
-vim.keymap.set("n", "<leader>W", ":wq<CR>", { desc = "[W]rite and quite (:wq)" })
+vim.keymap.set("n", "<leader>W", ":wq<CR>", { desc = "[W]rite and quit (:wq)" })
 vim.keymap.set("n", "<leader>q", ":q<CR>", { desc = "[q]uit (:q)" })
 vim.keymap.set("n", "<leader>Q", ":q!<CR>", { desc = "[Q]uit! (:q!)" })
 

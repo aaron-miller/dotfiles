@@ -60,7 +60,7 @@ require("lazy").setup({
 				["<leader>d"] = { name = "[D]ocument", _ = "which_key_ignore" },
 				["<leader>r"] = { name = "[R]ename", _ = "which_key_ignore" },
 				["<leader>s"] = { name = "[S]earch", _ = "which_key_ignore" },
-				["<leader>w"] = { name = "[W]orkspace", _ = "which_key_ignore" },
+				-- ["<leader>w"] = { name = "[W]orkspace", _ = "which_key_ignore" },
 				["<leader>g"] = { name = "[G]it", _ = "which_key_ignore" },
 			})
 		end,
@@ -139,7 +139,12 @@ require("lazy").setup({
 			vim.keymap.set("n", "<leader>sk", builtin.keymaps, { desc = "[S]earch [K]eymaps" })
 			vim.keymap.set("n", "<leader>sf", builtin.find_files, { desc = "[S]earch [F]iles" })
 			vim.keymap.set("n", "<leader>ss", builtin.builtin, { desc = "[S]earch [S]elect Telescope" })
-			vim.keymap.set("n", "<leader>sw", builtin.grep_string, { desc = "[S]earch current [W]ord" })
+			vim.keymap.set(
+				"n",
+				"<leader>sw",
+				builtin.lsp_dynamic_workspace_symbols,
+				{ desc = "[S]earch current [W]orkspace" }
+			)
 			vim.keymap.set("n", "<leader>sg", builtin.live_grep, { desc = "[S]earch by [G]rep" })
 			vim.keymap.set("n", "<leader>sd", builtin.diagnostics, { desc = "[S]earch [D]iagnostics" })
 			vim.keymap.set("n", "<leader>sr", builtin.resume, { desc = "[S]earch [R]esume" })
@@ -252,11 +257,11 @@ require("lazy").setup({
 
 					-- Fuzzy find all the symbols in your current workspace.
 					--  Similar to document symbols, except searches over your entire project.
-					map(
-						"<leader>ws",
-						require("telescope.builtin").lsp_dynamic_workspace_symbols,
-						"[W]orkspace [S]ymbols"
-					)
+					-- map(
+					-- 	"<leader>ws",
+					-- 	require("telescope.builtin").lsp_dynamic_workspace_symbols,
+					-- 	"[W]orkspace [S]ymbols"
+					-- )
 
 					-- Rename the variable under your cursor.
 					--  Most Language Servers support renaming across files, etc.
