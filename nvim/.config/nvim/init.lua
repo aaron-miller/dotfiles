@@ -627,6 +627,7 @@ require("lazy").setup({
 			vim.keymap.set("n", "<leader>tf", ":TestFile<CR>", { desc = "[T]est" })
 			vim.keymap.set("n", "<leader>ta", ":TestFile<CR>", { desc = "[T]est" })
 		end,
+  },
 	{
 		"christoomey/vim-tmux-navigator",
 		cmd = {
