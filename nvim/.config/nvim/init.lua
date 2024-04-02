@@ -627,6 +627,22 @@ require("lazy").setup({
 			vim.keymap.set("n", "<leader>tf", ":TestFile<CR>", { desc = "[T]est" })
 			vim.keymap.set("n", "<leader>ta", ":TestFile<CR>", { desc = "[T]est" })
 		end,
+	{
+		"christoomey/vim-tmux-navigator",
+		cmd = {
+			"TmuxNavigateLeft",
+			"TmuxNavigateDown",
+			"TmuxNavigateUp",
+			"TmuxNavigateRight",
+			"TmuxNavigatePrevious",
+		},
+		keys = {
+			{ "<c-h>", "<cmd><C-U>TmuxNavigateLeft<cr>" },
+			{ "<c-j>", "<cmd><C-U>TmuxNavigateDown<cr>" },
+			{ "<c-k>", "<cmd><C-U>TmuxNavigateUp<cr>" },
+			{ "<c-l>", "<cmd><C-U>TmuxNavigateRight<cr>" },
+			{ "<c-\\>", "<cmd><C-U>TmuxNavigatePrevious<cr>" },
+		},
 	},
 
 	-- The following two comments only work if you have downloaded the kickstart repo, not just copy pasted the
