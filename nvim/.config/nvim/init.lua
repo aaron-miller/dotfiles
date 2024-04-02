@@ -18,6 +18,8 @@ require("lazy").setup({
 			vim.keymap.set("n", "<leader>gg", vim.cmd.Gwrite, { desc = "[G]it [g]ood (:w and :Git add)" })
 			vim.keymap.set("n", "<leader>gA", ":Git commit -a<CR>", { desc = "[G]it commit --[a]ll" })
 			vim.keymap.set("n", "<leader>gc", ":Git commit<CR>", { desc = "[G]it [c]ommit" })
+			vim.keymap.set("n", "<leader>gkm", ":Git checkout main<CR>", { desc = "[G]it chec[k]out [m]ain" })
+			vim.keymap.set("n", "<leader>gkr", ":Git checkout ", { desc = "[G]it chec[k]out [r]ef" })
 			vim.keymap.set("n", "<leader>gh", ":Git push<CR>", { desc = "[G]it pus[h]" })
 			vim.keymap.set("n", "<leader>gl", ":Git pull<CR>", { desc = "[G]it pul[l]" })
 			vim.keymap.set("n", "<leader>gb", ":Git blame<CR>", { desc = "[G]it [b]lame" })
