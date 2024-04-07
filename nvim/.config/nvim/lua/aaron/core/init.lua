@@ -69,5 +69,6 @@ vim.opt.scrolloff = 10
 vim.opt.hlsearch = true
 vim.keymap.set("n", "<Esc>", "<cmd>nohlsearch<CR>")
 
-require("aaron.remap")
-require("aaron.autocmd")
+require("aaron.core.options")
+require("aaron.core.remap")
+require("aaron.core.autocmd")
