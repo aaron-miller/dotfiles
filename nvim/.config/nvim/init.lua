@@ -627,7 +627,7 @@ require("lazy").setup({
 			vim.keymap.set("n", "<leader>tf", ":TestFile<CR>", { desc = "[T]est" })
 			vim.keymap.set("n", "<leader>ta", ":TestFile<CR>", { desc = "[T]est" })
 		end,
-  },
+	},
 	{
 		"christoomey/vim-tmux-navigator",
 		cmd = {
@@ -645,6 +645,7 @@ require("lazy").setup({
 			{ "<c-\\>", "<cmd><C-U>TmuxNavigatePrevious<cr>" },
 		},
 	},
+},
 
 	-- The following two comments only work if you have downloaded the kickstart repo, not just copy pasted the
 	-- init.lua. If you want these files, they are in the repository, so you can just download them and
@@ -665,7 +666,7 @@ require("lazy").setup({
 	--  Uncomment the following line and add your plugins to `lua/custom/plugins/*.lua` to get going.
 	--    For additional information, see `:help lazy.nvim-lazy.nvim-structuring-your-plugins`
 	-- { import = 'custom.plugins' },
-}, {
+{
 	ui = {
 		-- If you are using a Nerd Font: set icons to an empty table which will use the
 		-- default lazy.nvim defined Nerd Font icons, otherwise define a unicode icons table
