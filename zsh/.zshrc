@@ -24,9 +24,6 @@ zstyle ':vcs_info:git:*' formats       '(%b%u%c)'
 zstyle ':vcs_info:git:*' actionformats '(%b|%a%u%c)'
 
 
-# Create a minimal prompt
-#export PS1="%~ %% "
-
 alias ls="ls -G"
 alias ll="ls -lG"
 alias lla="ls -laG"
