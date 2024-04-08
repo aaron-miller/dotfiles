@@ -1,3 +1,9 @@
+-- center screen when jumping up/down a page
+vim.keymap.set("n", "<C-f>", "<C-f>zz")
+vim.keymap.set("n", "<C-b>", "<C-b>zz")
+vim.keymap.set("n", "<C-d>", "<C-d>zz")
+vim.keymap.set("n", "<C-u>", "<C-u>zz")
+
 vim.keymap.set("n", "<leader>c", ":bd<CR>", { desc = "[C]lose buffer (:bd)" })
 vim.keymap.set("n", "<leader>w", ":w<CR>", { desc = "[w]rite buffer (:w)" })
 vim.keymap.set("n", "<leader>W", ":wq<CR>", { desc = "[W]rite and quit (:wq)" })
