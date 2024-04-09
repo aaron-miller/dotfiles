@@ -196,4 +196,9 @@ return { -- LSP Configuration & Plugins
 			},
 		})
 	end,
+}, {
+	"williamboman/mason-lspconfig.nvim",
+	opts = {
+		auto_install = true,
+	},
 }
