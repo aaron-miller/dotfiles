@@ -13,5 +13,9 @@ config.font_size = 12
 -- set background opacity
 config.window_background_opacity = .8
 
+-- set initial size
+config.initial_rows = 36
+config.initial_cols = 120
+
 -- and finally, return the configuration to wezterm
 return config
