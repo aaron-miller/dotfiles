@@ -4,12 +4,12 @@ vim.keymap.set("n", "<C-b>", "<C-b>zz")
 vim.keymap.set("n", "<C-d>", "<C-d>zz")
 vim.keymap.set("n", "<C-u>", "<C-u>zz")
 
-vim.keymap.set("n", "<leader>c", ":bd<CR>", { desc = "[C]lose buffer (:bd)" })
-vim.keymap.set("n", "<leader>w", ":w<CR>", { desc = "[w]rite buffer (:w)" })
-vim.keymap.set("n", "<leader>W", ":wq<CR>", { desc = "[W]rite and quit (:wq)" })
-vim.keymap.set("n", "<leader>q", ":q<CR>", { desc = "[q]uit (:q)" })
-vim.keymap.set("n", "<leader>Q", ":q!<CR>", { desc = "[Q]uit! (:q!)" })
-
+-- vim.keymap.set("n", "<leader>c", ":bd<CR>", { desc = "[C]lose buffer (:bd)" })
+-- vim.keymap.set("n", "<leader>w", ":w<CR>", { desc = "[w]rite buffer (:w)" })
+-- vim.keymap.set("n", "<leader>W", ":wq<CR>", { desc = "[W]rite and quit (:wq)" })
+-- vim.keymap.set("n", "<leader>q", ":q<CR>", { desc = "[q]uit (:q)" })
+-- vim.keymap.set("n", "<leader>Q", ":q!<CR>", { desc = "[Q]uit! (:q!)" })
+--
 vim.keymap.set("n", "<C-h>", "<C-w><C-h>", { desc = "Move focus to the left window" })
 vim.keymap.set("n", "<C-l>", "<C-w><C-l>", { desc = "Move focus to the right window" })
 vim.keymap.set("n", "<C-j>", "<C-w><C-j>", { desc = "Move focus to the lower window" })
