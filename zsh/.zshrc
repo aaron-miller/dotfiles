@@ -46,3 +46,6 @@ alias k="kubectl"
 alias ktx="kubectx"
 alias kns="kubens"
 
+alias dot="cd ~/.dotfiles"
+alias dotn="nvim ~/.dotfiles/nvim/.config/nvim"
+alias dotz="nvim ~/.dotfiles/zsh"
