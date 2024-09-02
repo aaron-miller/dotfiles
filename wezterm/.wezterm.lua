@@ -6,8 +6,12 @@ local config = wezterm.config_builder()
 
 -- This is where you actually apply your config choices
 
+-- use Hack with Nerd Font glyphs
 wezterm.font("Hack Nerd Font Mono", { weight = "Regular", stretch = "Normal", style = "Normal" })
-config.font_size = 16
+config.font_size = 12
+
+-- set background opacity
+config.window_background_opacity = .8
 
 -- and finally, return the configuration to wezterm
 return config
