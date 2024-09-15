@@ -11,7 +11,7 @@ wezterm.font("Hack Nerd Font Mono", { weight = "Regular", stretch = "Normal", st
 config.font_size = 12
 
 -- set background opacity
-config.window_background_opacity = .8
+config.window_background_opacity = .85
 
 -- set initial size
 config.initial_rows = 36
