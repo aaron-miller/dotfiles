@@ -17,5 +17,8 @@ config.window_background_opacity = .85
 config.initial_rows = 36
 config.initial_cols = 120
 
+-- enable scrollbar
+config.enable_scroll_bar = true
+
 -- and finally, return the configuration to wezterm
 return config
