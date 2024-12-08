@@ -30,8 +30,11 @@ set lazyredraw
 syntax on
 
 " Set colorscheme
-set background=dark
+" set background=dark
 colorscheme kuroi
+
+" Transparent background
+autocmd vimenter * hi Normal guibg=NONE ctermbg=NONE
 
 let mapleader = ","
 
