@@ -26,6 +26,9 @@ lazyload irb -- 'eval "$(rbenv init - --no-rehash zsh)" && irb'
 lazyload gem -- 'eval "$(rbenv init - --no-rehash zsh)" && gem'
 lazyload tmuxinator -- 'eval "$(rbenv init - --no-rehash zsh)" && tmuxintor'
 
+# enable Ctrl + R
+bindkey -v
+bindkey '^R' history-incremental-search-backward
 
 # Load Homebrew shell completion
 if type brew &>/dev/null; then
