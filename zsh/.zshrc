@@ -15,15 +15,14 @@ zgem bundle 'https://github.com/qoomon/zsh-lazyload.git' from:'git' use:'zsh-laz
 
 # nvm
 lazyload nvm -- '[ -s "/opt/homebrew/opt/nvm/nvm.sh" ] && \. "/opt/homebrew/opt/nvm/nvm.sh"'
-lazyload npm -- '[ -s "/opt/homebrew/opt/nvm/nvm.sh" ] && \. "/opt/homebrew/opt/nvm/nvm.sh"'
-lazyload npx -- '[ -s "/opt/homebrew/opt/nvm/nvm.sh" ] && \. "/opt/homebrew/opt/nvm/nvm.sh"'
-lazyload node -- '[ -s "/opt/homebrew/opt/nvm/nvm.sh" ] && \. "/opt/homebrew/opt/nvm/nvm.sh"'
+
+# pyenv
+export PYENV_ROOT="$HOME/.pyenv"
+[[ -d $PYENV_ROOT/bin ]] && export PATH="$PYENV_ROOT/bin:$PATH"
+lazyload pyenv -- 'eval "$(pyenv init -)"'
 
 # rbenv
 lazyload rbenv -- 'eval "$(rbenv init - --no-rehash zsh)"'
-lazyload ruby -- 'eval "$(rbenv init - --no-rehash zsh)" && ruby'
-lazyload irb -- 'eval "$(rbenv init - --no-rehash zsh)" && irb'
-lazyload gem -- 'eval "$(rbenv init - --no-rehash zsh)" && gem'
 lazyload tmuxinator -- 'eval "$(rbenv init - --no-rehash zsh)" && tmuxintor'
 
 # enable Ctrl + R
