@@ -20,5 +20,8 @@ config.initial_cols = 120
 -- enable scrollbar
 config.enable_scroll_bar = true
 
+-- disable quit prompt
+config.window_close_confirmation = 'NeverPrompt'
+
 -- and finally, return the configuration to wezterm
 return config
