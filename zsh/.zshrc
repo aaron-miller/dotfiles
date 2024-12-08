@@ -49,3 +49,5 @@ alias kns="kubens"
 alias dot="cd ~/.dotfiles"
 alias dotn="nvim ~/.dotfiles/nvim/.config/nvim"
 alias dotz="nvim ~/.dotfiles/zsh"
+
+eval "$(starship init zsh)"
