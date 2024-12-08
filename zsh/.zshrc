@@ -1,28 +1,36 @@
+# Load zsh plugin manager zgem - https://github.com/qoomon/zgem
+ZGEM_HOME="$HOME/.zsh.zgem"
+# ZGEM_GEM_DIR="$ZGEM_HOME/gems"
+# ZGEM_UTILS_DIR="$HOME"
+
+[[ -e "$ZGEM_HOME" ]] || git clone 'https://github.com/qoomon/zgem.git' "$ZGEM_HOME"
+source "$ZGEM_HOME/zgem.zsh" 
+
+##### Plugins ######
+#
+# Lazy load nvm, pyenv, rbenv, etc.
+zgem bundle 'https://github.com/qoomon/zsh-lazyload.git' from:'git' use:'zsh-lazyload.zsh'
+
+# lazy load version managers
+
+# nvm
+lazyload nvm -- '[ -s "/opt/homebrew/opt/nvm/nvm.sh" ] && \. "/opt/homebrew/opt/nvm/nvm.sh"'
+lazyload npm -- '[ -s "/opt/homebrew/opt/nvm/nvm.sh" ] && \. "/opt/homebrew/opt/nvm/nvm.sh"'
+lazyload npx -- '[ -s "/opt/homebrew/opt/nvm/nvm.sh" ] && \. "/opt/homebrew/opt/nvm/nvm.sh"'
+lazyload node -- '[ -s "/opt/homebrew/opt/nvm/nvm.sh" ] && \. "/opt/homebrew/opt/nvm/nvm.sh"'
+
+# rbenv
+lazyload rbenv -- 'eval "$(rbenv init - --no-rehash zsh)"'
+lazyload ruby -- 'eval "$(rbenv init - --no-rehash zsh)" && ruby'
+lazyload irb -- 'eval "$(rbenv init - --no-rehash zsh)" && irb'
+lazyload gem -- 'eval "$(rbenv init - --no-rehash zsh)" && gem'
+lazyload tmuxinator -- 'eval "$(rbenv init - --no-rehash zsh)" && tmuxintor'
+
+
 # Load Homebrew shell completion
 if type brew &>/dev/null; then
   FPATH=$(brew --prefix)/share/zsh/site-functions:$FPATH
 fi
-
-# zsh git prompt
-# Autoload zsh add-zsh-hook and vcs_info functions (-U autoload w/o substition, -z use zsh style)
-autoload -Uz add-zsh-hook vcs_info
-# Enable substitution in the prompt.
-setopt prompt_subst
-# Run vcs_info just before a prompt is displayed (precmd)
-add-zsh-hook precmd vcs_info
-# add ${vcs_info_msg_0} to the prompt
-# e.g. here we add the Git information in red  
-PROMPT='%~ %F{red}${vcs_info_msg_0_}%f%% '
-
-# Enable checking for (un)staged changes, enabling use of %u and %c
-zstyle ':vcs_info:*' check-for-changes true
-# Set custom strings for an unstaged vcs repo changes (*) and staged changes (+)
-zstyle ':vcs_info:*' unstagedstr ' *'
-zstyle ':vcs_info:*' stagedstr ' +'
-# Set the format of the Git information for vcs_info
-zstyle ':vcs_info:git:*' formats       '(%b%u%c)'
-zstyle ':vcs_info:git:*' actionformats '(%b|%a%u%c)'
-
 
 alias ls="ls -G"
 alias ll="ls -lG"
