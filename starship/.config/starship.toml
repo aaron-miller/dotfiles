@@ -5,10 +5,26 @@ format = """
 $directory\
 $git_branch\
 $git_status\
+$git_metrics\
+$lua\
+$python\
+$ruby\
+$go\
+$nodejs\
+$terraform\
+$package\
+$aws\
+$azure\
+$kubernetes\
+$helm\
+$jobs\
 $character"""
 
 # Inserts a blank line between shell prompts
 add_newline = false
+
+[git_metrics]
+disabled = false
 
 # Replace the '❯' symbol in the prompt with '➜'
 [character] # The name of the module we are configuring is 'character'
