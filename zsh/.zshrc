@@ -34,7 +34,11 @@ if type brew &>/dev/null; then
   FPATH=$(brew --prefix)/share/zsh/site-functions:$FPATH
 fi
 
-alias ls="ls -G"
+if type eza &>/dev/null; then
+  alias ls="eza --icons"
+else
+  alias ls="ls -G"
+fi
 alias ll="ls -lG"
 alias lla="ls -laG"
 alias la="la -aG"
