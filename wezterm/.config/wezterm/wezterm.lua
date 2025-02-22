@@ -31,7 +31,9 @@ config.window_close_confirmation = "NeverPrompt"
 config.hide_tab_bar_if_only_one_tab = true
 
 -- hide the window decorations
-config.window_decorations = "RESIZE"
+if wezterm.target_triple == "aarch64-apple-darwin" then
+	config.window_decorations = "RESIZE"
+end
 
 -- and finally, return the configuration to wezterm
 return config
