@@ -14,11 +14,17 @@ vim.keymap.set("n", "<C-k>", "<C-w><C-k>", { desc = "Move focus to the upper win
 local wk = require("which-key")
 
 wk.add({
+
 	-- general
-	{ "<leader>ns", ":source %<CR>", desc = "[n]eovim [s]ource" },
 	{ "<leader>E", ":Ex<CR>", desc = "[E]xplore dir (:Ex)" },
 	{ "<leader>W", ":w<CR>", desc = "[W]rite buffer (:w)" },
 	{ "<leader>Q", ":q<CR>", desc = "[Q]uit (:q)" },
+
+	-- neovim
+	{ "<leader>n", group = "[n]eovim" },
+	{ "<leader>ns", ":source %<CR>", desc = "[n]eovim [s]ource" },
+	{ "<leader>nl", ":Lazy<CR>", desc = "[n]eovim [l]azy" },
+	{ "<leader>nm", ":Mason<CR>", desc = "[n]eovim [m]ason" },
 
 	-- buffers
 	{
@@ -29,6 +35,13 @@ wk.add({
 		end,
 	},
 	{ "<leader>bd", ":bd<CR>", desc = "[B]uffer [d]elete (:bd)" },
+	{
+		"<leader>bf",
+		function()
+			require("conform").format({ async = true, lsp_fallback = true })
+		end,
+		desc = "[b]uffer [f]ormat",
+	},
 
 	-- Diagnostic keymaps
 	{ "[d", vim.diagnostic.goto_prev, desc = "Go to previous [D]iagnostic message" },
