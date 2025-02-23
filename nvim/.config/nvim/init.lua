@@ -1,3 +1,6 @@
+vim.g.mapleader = " "
+vim.g.maplocalleader = " "
+
 require("aaron.lazy")
 require("aaron.core")
 
