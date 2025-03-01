@@ -6,17 +6,7 @@ $directory\
 $git_branch\
 $git_status\
 $git_metrics\
-$lua\
-$python\
-$ruby\
-$go\
-$nodejs\
-$terraform\
 $package\
-$aws\
-$azure\
-$kubernetes\
-$helm\
 $jobs\
 $character"""
 
