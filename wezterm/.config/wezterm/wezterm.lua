@@ -35,5 +35,8 @@ if wezterm.target_triple == "aarch64-apple-darwin" then
 	config.window_decorations = "RESIZE"
 end
 
+-- pi keybinds
+config.enable_kitty_keyboard = true
+
 -- and finally, return the configuration to wezterm
 return config
