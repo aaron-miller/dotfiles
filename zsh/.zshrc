@@ -7,11 +7,7 @@ if type brew &>/dev/null; then
   FPATH=$(brew --prefix)/share/zsh/site-functions:$FPATH
 fi
 
-# if type eza &>/dev/null; then
-#   alias ls="eza --icons"
-# else
 alias ls="ls -G"
-# fi
 alias ll="ls -lG"
 alias lla="ls -laG"
 alias la="la -aG"
@@ -33,9 +29,14 @@ alias k="kubectl"
 alias ktx="kubectx"
 alias kns="kubens"
 
-alias dot="cd ~/.dotfiles"
-alias dotn="nvim ~/.dotfiles/nvim/.config/nvim"
-alias dotz="nvim ~/.dotfiles/zsh"
+# devpods
+alias dpu="devpod up ."
+alias dpd="devpod delete ."
+alias dp="devpod ssh ."
+
+# alias dot="cd ~/.dotfiles"
+# alias dotn="nvim ~/.dotfiles/nvim/.config/nvim"
+# alias dotz="nvim ~/.dotfiles/zsh"
 
 eval "$(starship init zsh)"
 
