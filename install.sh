@@ -85,13 +85,16 @@ backup_conflicts() {
 
     # `stow -n` (dry run) with verbose prints planned actions and conflicts.
     # Parse conflict lines to find existing targets that need to move aside.
-    local conflicts
-    conflicts=$(stow --no --verbose=2 --target="$HOME" --restow "$pkg" 2>&1 \
+    local stow_output conflicts
+    # `stow --no` exits non-zero when conflicts exist; don't let that abort
+    # the script under `set -e` / `pipefail`.
+    stow_output=$(stow --no --verbose=2 --target="$HOME" --restow "$pkg" 2>&1 || true)
+    conflicts=$(printf '%s\n' "$stow_output" \
         | awk '/cannot stow .* over existing target/ {
                   for (i=1;i<=NF;i++) if ($i=="target") { print $(i+1); break }
               }' \
         | sed 's/[[:space:]]*since.*$//' \
-        | sort -u)
+        | sort -u || true)
 
     if [ -z "$conflicts" ]; then
         return 0
