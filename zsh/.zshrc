@@ -25,6 +25,17 @@ alias gfp="git fetch --all --prune"
 alias gr="git rebase -i"
 alias gro="git rebase -i origin/main"
 
+# aws
+awsp() {
+  if ! command -v aws &>/dev/null; then
+    echo "awsp: aws CLI is not installed" >&2
+    return 1
+  fi
+  local profile=$(aws configure list-profiles | fzf --height 40% --prompt="AWS Profile> ")
+  [[ -n "$profile" ]] && export AWS_PROFILE="$profile" && echo "→ $profile"
+}
+
+# kubernetes
 alias k="kubectl"
 alias ktx="kubectx"
 alias kns="kubens"
@@ -34,9 +45,9 @@ alias dpu="devpod up ."
 alias dpd="devpod delete ."
 alias dp="devpod ssh ."
 
-# alias dot="cd ~/.dotfiles"
-# alias dotn="nvim ~/.dotfiles/nvim/.config/nvim"
-# alias dotz="nvim ~/.dotfiles/zsh"
+alias dot="cd ~/.dotfiles"
+alias dotn="nvim ~/.dotfiles/nvim/.config/nvim"
+alias dotz="nvim ~/.dotfiles/zsh"
 
 eval "$(starship init zsh)"
 
