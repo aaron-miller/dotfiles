@@ -1,8 +1,10 @@
 #!/usr/bin/env bash
-# This file is intended to be used by devpods' dotfiles feature.
-# You could probably run this on your own Linux/macOS machine
-# but that isn't the intention nor probably what you'd want
-# if you are just checking out some dotfiles.
+# Dotfiles installer for devpod / devcontainer environments (Linux only).
+#
+#   1. Install Nix (single-user, daemonless — works in any container).
+#   2. Install all packages from this repo's flake into the user profile
+#      (neovim, stow, git, tmux, etc.).
+#   3. Use GNU stow to symlink config directories into $HOME.
 
 set -euo pipefail
 
@@ -11,6 +13,7 @@ DOTFILES_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
 # Packages to stow (directories in this repo).
 PACKAGES=(
   curl
+  git
   nvim
   pre-commit
   starship
@@ -28,36 +31,9 @@ load_nix_env() {
   if command -v nix >/dev/null 2>&1; then
     return 0
   fi
-  # Determinate Systems / multi-user installer
-  if [ -e /nix/var/nix/profiles/default/etc/profile.d/nix-daemon.sh ]; then
-    # shellcheck disable=SC1091
-    . /nix/var/nix/profiles/default/etc/profile.d/nix-daemon.sh
-  fi
-  # Single-user installer
   if [ -e "$HOME/.nix-profile/etc/profile.d/nix.sh" ]; then
     # shellcheck disable=SC1091
     . "$HOME/.nix-profile/etc/profile.d/nix.sh"
-  fi
-}
-
-install_nix() {
-  log "Nix not found; installing via the Determinate Systems installer..."
-  if ! command -v curl >/dev/null 2>&1; then
-    err "curl is required to install Nix. Please install curl and re-run."
-    exit 1
-  fi
-  # The DS installer handles macOS and Linux, multi-user by default, and
-  # enables flakes + the nix command out of the box.
-  curl --proto '=https' --tlsv1.2 -sSf -L \
-    https://install.determinate.systems/nix |
-    sh -s -- install --no-confirm
-
-  load_nix_env
-
-  if ! command -v nix >/dev/null 2>&1; then
-    err "Nix install completed but 'nix' is still not on PATH."
-    err "Open a new shell and re-run this script."
-    exit 1
   fi
 }
 
@@ -65,38 +41,36 @@ ensure_nix() {
   load_nix_env
   if command -v nix >/dev/null 2>&1; then
     log "Nix already installed ($(nix --version))"
-  else
-    install_nix
+    return 0
   fi
 
-  # Make sure flakes + nix-command are usable for this invocation, even if
-  # the user's nix.conf doesn't enable them.
-  export NIX_CONFIG="${NIX_CONFIG:-}
-experimental-features = nix-command flakes"
+  log "Installing Nix (single-user, daemonless)..."
+  # Single-user installer works in any Linux container: it puts /nix under
+  # the current user's ownership and doesn't need systemd or root.
+  curl --proto '=https' --tlsv1.2 -sSf -L https://nixos.org/nix/install |
+    sh -s -- --no-daemon
+
+  load_nix_env
+
+  if ! command -v nix >/dev/null 2>&1; then
+    err "Nix install completed but 'nix' is still not on PATH."
+    exit 1
+  fi
 }
 
 install_flake_packages() {
   log "Installing packages from flake into user profile..."
-  cd "$DOTFILES_DIR"
+  # Enable flakes for this invocation regardless of user nix.conf.
+  export NIX_CONFIG="${NIX_CONFIG:-}
+experimental-features = nix-command flakes"
 
-  # Use `nix profile install` with a stable name so re-running upgrades in
-  # place instead of erroring on "already installed".
-  if nix profile list 2>/dev/null | grep -qE '(^|[[:space:]])dotfiles([[:space:]]|$)|dotfiles-env'; then
+  # Re-running should upgrade in place rather than error on duplicate install.
+  if nix profile list 2>/dev/null | grep -q 'dotfiles-env'; then
     log "Upgrading existing dotfiles profile entry..."
     nix profile upgrade --all || true
   else
-    nix profile install --impure "$DOTFILES_DIR#default"
+    nix profile install "$DOTFILES_DIR#default"
   fi
-}
-
-ensure_stow() {
-  if command -v stow >/dev/null 2>&1; then
-    log "GNU stow available ($(stow --version | head -n1))"
-    return 0
-  fi
-  err "stow not found on PATH even after installing the flake."
-  err "Make sure ~/.nix-profile/bin is on your PATH and re-run."
-  exit 1
 }
 
 # Back up any existing real files/dirs in $HOME that would conflict with
@@ -109,14 +83,12 @@ backup_conflicts() {
   stow_output=$(stow --no --verbose=2 --target="$HOME" --restow "$pkg" 2>&1 || true)
   conflicts=$(printf '%s\n' "$stow_output" |
     awk '/cannot stow .* over existing target/ {
-                  for (i=1;i<=NF;i++) if ($i=="target") { print $(i+1); break }
-              }' |
+              for (i=1;i<=NF;i++) if ($i=="target") { print $(i+1); break }
+          }' |
     sed 's/[[:space:]]*since.*$//' |
     sort -u || true)
 
-  if [ -z "$conflicts" ]; then
-    return 0
-  fi
+  [ -z "$conflicts" ] && return 0
 
   mkdir -p "$backup_dir"
   while IFS= read -r rel; do
@@ -146,7 +118,6 @@ stow_packages() {
 main() {
   ensure_nix
   install_flake_packages
-  ensure_stow
   stow_packages
   log "All done."
 }
