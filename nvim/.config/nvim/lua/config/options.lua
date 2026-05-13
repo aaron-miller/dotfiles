@@ -5,3 +5,9 @@ local opt = vim.opt
 
 -- disable clipboard sync
 opt.clipboard = ""
+
+-- Snacks animations
+-- Set to `false` to globally disable all snacks animations
+vim.g.snacks_animate = false
+
+vim.g.lazyvim_cmp = "blink.cmp"
