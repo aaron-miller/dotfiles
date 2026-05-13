@@ -53,7 +53,6 @@
           kubectx
           kubernetes-helm
           argocd
-          kubectl-argo-rollouts
         ];
       in {
         packages.default = pkgs.buildEnv {
