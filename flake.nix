@@ -46,6 +46,7 @@
           coreutils
           gnused
           gawk
+          gcc
           pre-commit
 
           # Kubernetes
