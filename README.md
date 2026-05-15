@@ -12,7 +12,6 @@ brew install --cask 1password aerospace dbeaver-community firefox firefox@develo
 ### Requirements
 - GNU stow
 - Hack Nerd Font
-- nvm, rbenv
 
 1. `git clone https://github.com/aaron-miller/dotfiles.git ~/.dotfiles`
 2. `cd ~/.dotfiles`
