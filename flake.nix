@@ -41,6 +41,10 @@
           htop
           direnv
 
+          # Clipboard integration (X11 + Wayland)
+          xclip
+          wl-clipboard
+
           # Dev tooling
           gnumake
           coreutils
