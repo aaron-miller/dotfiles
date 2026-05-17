@@ -50,5 +50,8 @@
   "markdown": {
     "codeBlockIndent": "  "
   },
-  "lastChangelogVersion": "0.74.0"
+  "lastChangelogVersion": "0.74.0",
+  "defaultProvider": "deepseek",
+  "defaultModel": "deepseek-v4-flash",
+  "defaultThinkingLevel": "high"
 }
