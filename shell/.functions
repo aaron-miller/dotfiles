@@ -1,0 +1,9 @@
+# aws
+awsp() {
+  if ! command -v aws &>/dev/null; then
+    echo "awsp: aws CLI is not installed" >&2
+    return 1
+  fi
+  local profile=$(aws configure list-profiles | fzf --height 40% --prompt="AWS Profile> ")
+  [[ -n "$profile" ]] && export AWS_PROFILE="$profile" && echo "→ $profile"
+}
