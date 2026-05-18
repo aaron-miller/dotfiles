@@ -43,7 +43,7 @@ alias dpd="devpod delete ."
 alias dp="devpod ssh ."
 
 alias dot="cd ~/.dotfiles"
-alias dotn="nvim ~/.dotfiles/nvim/.config/nvim"
+alias dotn="cd ~/.dotfiles/nvim/.config/nvim; nvim ."
 alias dotz="nvim ~/.dotfiles/zsh"
 alias dott="nvim ~/.dotfiles/tmux/.tmux.conf"
 
