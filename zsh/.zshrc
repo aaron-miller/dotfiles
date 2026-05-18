@@ -11,8 +11,11 @@ if type brew &>/dev/null; then
 fi
 
 # completion
+autoload -U compinit; compinit
 zstyle ':completion:*' use-cache on
 zstyle ':completion:*' cache-path ~/.zsh/cache
+zstyle ':completion:*' file-sort modification
+zstyle ':completion:*' completer _extensions _complete _approximate
 
 
 # aliases
@@ -28,6 +31,9 @@ alias -s go=${EDITOR}
 alias -s py=${EDITOR}
 alias -s md=${EDITOR}
 alias -s markdown=${EDITOR}
+alias -s json=${EDITOR}
+alias -s yaml=${EDITOR}
+alias -s toml=${EDITOR}
 
 
 # widgets
@@ -42,3 +48,4 @@ bindkey '^x^e' edit-command-line
 
 eval "$(starship init zsh)"
 
+source /opt/homebrew/share/zsh-syntax-highlighting/zsh-syntax-highlighting.zsh
