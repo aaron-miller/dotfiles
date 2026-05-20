@@ -7,3 +7,12 @@ awsp() {
   local profile=$(aws configure list-profiles | fzf --height 40% --prompt="AWS Profile> ")
   [[ -n "$profile" ]] && export AWS_PROFILE="$profile" && echo "→ $profile"
 }
+
+# llm wrapper - usage: ask-llm <prompt>
+ask-llm() {
+  if [[ $# -eq 0 ]]; then
+    echo "ask-llm: no prompt provided" >&2
+    return 1
+  fi
+  llm "$*"
+}

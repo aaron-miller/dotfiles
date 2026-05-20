@@ -47,3 +47,5 @@ alias dotn="cd ~/.dotfiles/nvim/.config/nvim; nvim ."
 alias dotz="nvim ~/.dotfiles/zsh"
 alias dott="nvim ~/.dotfiles/tmux/.tmux.conf"
 
+alias ai='noglob ask-llm'
+
