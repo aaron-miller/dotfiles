@@ -1,6 +1,9 @@
 export EDITOR=nvim
 export BROWSER=firefox
 
+# Disable Pi version update check on startup
+export PI_SKIP_VERSION_CHECK=1
+
 # enable Ctrl + R
 bindkey -v
 bindkey '^R' history-incremental-search-backward
