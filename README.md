@@ -1,4 +1,5 @@
 # dotfiles
+
 My personal dotfiles to be used with GNU Stow.
 
 ## Quickstart
@@ -10,6 +11,7 @@ brew install --cask 1password aerospace dbeaver-community firefox firefox@develo
 ```
 
 ### Requirements
+
 - GNU stow
 - Hack Nerd Font
 
