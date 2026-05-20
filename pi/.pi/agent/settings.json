@@ -13,7 +13,10 @@
   "followUpMode": "one-at-a-time",
   "transport": "sse",
   "enableSkillCommands": true,
-  "packages": [],
+  "packages": [
+    "npm:pi-subagents",
+    "npm:pi-web-access"
+  ],
   "extensions": [],
   "skills": [],
   "prompts": [],
