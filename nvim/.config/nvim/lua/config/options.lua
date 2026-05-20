@@ -9,3 +9,6 @@ opt.clipboard = vim.env.SSH_CONNECTION and "" or "" -- Sync with system clipboar
 -- Snacks animations
 -- Set to `false` to globally disable all snacks animations
 vim.g.snacks_animate = false
+
+-- Show all markdown characters (backticks, etc.)
+opt.conceallevel = 0
