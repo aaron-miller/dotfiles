@@ -8,7 +8,7 @@ local config = wezterm.config_builder()
 
 -- use Hack with Nerd Font glyphs
 wezterm.font("Hack Nerd Font Mono", { weight = "Regular", stretch = "Normal", style = "Normal" })
-config.font_size = 14
+config.font_size = 20
 
 -- Colorscheme
 config.color_scheme = "Catppuccin Mocha"
