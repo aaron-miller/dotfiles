@@ -1,7 +1,5 @@
 {
   "$schema": "https://opencode.ai/tui.json",
   "display_thinking": false,
-  "keybinds": {
-    "display_thinking": "ctrl+t"
-  }
+  "keybinds": {}
 }
