@@ -21,7 +21,7 @@ zstyle ':completion:*' file-sort modification
 zstyle ':completion:*' completer _extensions _complete _approximate
 
 # podman
-podman completion -f "${fpath[1]}/_podman" zsh
+# podman completion -f "${fpath[1]}/_podman" zsh
 
 # kubectl
 source <(command kubectl completion zsh)
