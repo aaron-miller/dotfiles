@@ -33,6 +33,21 @@
           "name": "deepseek-v4-pro"
         }
       }
+    },
+    "agentgateway": {
+      "npm": "@ai-sdk/openai-compatible",
+      "name": "Agentgateway",
+      "options": {
+        "baseURL": "{env:AGENTGATEWAY_BASE_URL}",
+        "headers": {
+          "Authorization": "Bearer {env:AGENTGATEWAY_API_KEY}"
+        }
+      },
+      "models": {
+        "claude-sonnet": { "name": "Claude Sonnet (agentgateway)" },
+        "claude-opus": { "name": "Claude Opus (agentgateway)" },
+        "auto": { "name": "Semantic Router" }
+      }
     }
   }
 }

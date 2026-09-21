@@ -6,6 +6,15 @@ local config = wezterm.config_builder()
 
 -- This is where you actually apply your config choices
 
+-- fix shift + enter on opencode
+config.keys = {
+	{
+		key = "Enter",
+		mods = "SHIFT",
+		action = wezterm.action.SendString("\x1b[13;2u"),
+	},
+}
+
 -- use Hack with Nerd Font glyphs
 wezterm.font("Hack Nerd Font Mono", { weight = "Regular", stretch = "Normal", style = "Normal" })
 config.font_size = 20
