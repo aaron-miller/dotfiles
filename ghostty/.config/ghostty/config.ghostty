@@ -1,0 +1,12 @@
+font-family = Hack Nerd Font Mono
+font-size = 20
+theme = Catppuccin Mocha
+background-opacity = 0.85
+background-blur = 10
+window-width = 120
+window-height = 36
+scrollbar = system
+confirm-close-surface = false
+window-decoration = false
+cursor-style = block
+shell-integration-features = no-cursor
