@@ -13,10 +13,7 @@
   "followUpMode": "one-at-a-time",
   "transport": "sse",
   "enableSkillCommands": true,
-  "packages": [
-    "npm:pi-subagents",
-    "npm:pi-web-access"
-  ],
+  "packages": ["npm:pi-subagents", "npm:pi-web-access"],
   "extensions": [],
   "skills": [],
   "prompts": [],
@@ -53,7 +50,7 @@
   "markdown": {
     "codeBlockIndent": "  "
   },
-  "lastChangelogVersion": "0.78.1",
+  "lastChangelogVersion": "0.75.5",
   "defaultProvider": "deepseek",
   "defaultModel": "deepseek-v4-flash",
   "defaultThinkingLevel": "high"
