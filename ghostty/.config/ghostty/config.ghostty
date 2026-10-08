@@ -9,4 +9,5 @@ scrollbar = system
 confirm-close-surface = false
 window-decoration = false
 cursor-style = block
+cursor-style-blink = false
 shell-integration-features = no-cursor
