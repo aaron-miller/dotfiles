@@ -3,7 +3,10 @@
   "theme": {
     "name": "tokyonight"
   },
-  "keybinds": {},
+  "keybinds": {
+    "session.tab.previous": "<leader>[,alt+up",
+    "session.tab.next": "<leader>],alt+down"
+  },
   "diffs": {
     "wrap": "word"
   },

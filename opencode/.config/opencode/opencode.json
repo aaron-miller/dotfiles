@@ -3,6 +3,9 @@
   "autoupdate": false,
   "lsp": true,
   "plugin": [],
+  "agents": {
+    "build": { "color": "#D32F2F" }
+  },
   "provider": {
     "litellm": {
       "npm": "@ai-sdk/openai-compatible",
