@@ -8,3 +8,5 @@ pi/.pi/agent/sessions/**
 pi/.pi/agent/auth.json
 pi/.pi/agent/bin/**
 opencode/.config/opencode/opencode-notifier-state.json
+opencode/.config/opencode/service.json
+pi/.pi/agent/models-store.json
