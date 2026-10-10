@@ -98,7 +98,7 @@ set undofile
 set undodir=~/.vim/undo
 
 " number of undo saved
-set undolevels=10000 
+set undolevels=10000
 
 "*****************************************************************************
 "" Mappings
@@ -142,4 +142,3 @@ noremap <leader>c :bd<CR>
 
 "" Clean search (highlight)
 nnoremap <silent> <leader><space> :noh<cr>
-

@@ -11,4 +11,3 @@ set guioptions +=k  " set for smooth window resizing
 " disable menubar
 " TODO: Maybe disable this only if on MacOS?
 " set guioptions -=m
-

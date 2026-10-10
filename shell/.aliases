@@ -48,4 +48,3 @@ alias dotz="nvim ~/.dotfiles/zsh"
 alias dott="nvim ~/.dotfiles/tmux/.tmux.conf"
 
 alias ai='noglob ask-llm'
-
