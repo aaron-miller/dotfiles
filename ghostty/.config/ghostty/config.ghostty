@@ -6,6 +6,7 @@ background-blur = 10
 window-width = 120
 window-height = 36
 scrollbar = system
+mouse-scroll-multiplier = discrete:1
 confirm-close-surface = false
 window-decoration = false
 cursor-style = block
