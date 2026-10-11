@@ -16,3 +16,138 @@ ask-llm() {
   fi
   llm "$*"
 }
+
+# worktrees - wrk dir: ~/wrk/<repo>/<branch>, main clones: ~/src/<repo>
+_wt_check() {
+  command -v fzf &>/dev/null || { echo "fzf is not installed" >&2; return 1; }
+}
+
+# prints the main clone path if run inside a git repo
+_wt_repo() {
+  local common
+  common=$(git rev-parse --path-format=absolute --git-common-dir 2>/dev/null) || return 1
+  print -r -- "${common:h}"
+}
+
+# every worktree under ~/wrk
+_wt_all() {
+  find ~/wrk -name .git -type f 2>/dev/null | sed 's#/\.git$##' | sort
+}
+
+# worktrees for the current repo (excluding the main clone), or all under ~/wrk
+_wt_list() {
+  local repo
+  if repo=$(_wt_repo); then
+    git -C "$repo" worktree list --porcelain \
+      | awk -v main="$repo" '/^worktree /{p=substr($0,10); if (p != main) print p}'
+  else
+    _wt_all
+  fi
+}
+
+_wt_pick() {
+  local list
+  list=$(_wt_list)
+  if [[ -z $list ]]; then
+    echo "no worktrees found" >&2
+    return 1
+  fi
+  print -r -- "$list" | fzf --height 40% --prompt="$1"
+}
+
+_wt_pick_repo() {
+  local g repos=()
+  for g in ~/src/*/.git(N); do repos+=("${g:h}"); done
+  if (( ${#repos} == 0 )); then
+    echo "no repos found in ~/src" >&2
+    return 1
+  fi
+  print -r -- "${(F)repos}" | fzf --height 40% --prompt="repo> "
+}
+
+# cd to a worktree for the current repo, or any worktree under ~/wrk
+wt() {
+  _wt_check || return 1
+  local dest
+  dest=$(_wt_pick "worktree> ") || return
+  [[ -n $dest ]] && cd "$dest"
+}
+
+# cd to any worktree under ~/wrk
+wtl() {
+  _wt_check || return 1
+  local dest
+  if [[ -z $(_wt_all) ]]; then
+    echo "no worktrees found in ~/wrk" >&2
+    return 1
+  fi
+  dest=$(_wt_all | fzf --height 40% --prompt="worktree> ") || return
+  [[ -n $dest ]] && cd "$dest"
+}
+
+# create ~/wrk/<repo>/<branch> - usage: mkwt [branch]
+mkwt() {
+  _wt_check || return 1
+  local branch=$1 repo_dir default out rc query selected dest
+  if ! repo_dir=$(_wt_repo); then
+    repo_dir=$(_wt_pick_repo) || return
+  fi
+  [[ -n $repo_dir ]] || return 1
+
+  git -C "$repo_dir" fetch --prune origin || return
+
+  default=$(git -C "$repo_dir" symbolic-ref --quiet --short refs/remotes/origin/HEAD 2>/dev/null) \
+    || default=origin/main
+
+  if [[ -z $branch ]]; then
+    out=$(git -C "$repo_dir" for-each-ref --format='%(refname:short)' refs/heads refs/remotes/origin \
+      | sed 's#^origin/##' | grep -vxE 'HEAD|origin' | sort -u \
+      | fzf --print-query --height 40% --prompt="branch> ")
+    rc=$?
+    (( rc == 0 || rc == 1 )) || return 1
+    local lines=("${(@f)out}")
+    query=${lines[1]}
+    selected=${lines[2]}
+    branch=${selected:-$query}
+  fi
+
+  branch=${branch#origin/}
+  if [[ -z $branch ]]; then
+    echo "mkwt: no branch given" >&2
+    return 1
+  fi
+
+  dest=$HOME/wrk/${repo_dir:t}/$branch
+  if [[ -d $dest ]]; then
+    cd "$dest"
+    return
+  fi
+  mkdir -p "${dest:h}" || return
+
+  if git -C "$repo_dir" show-ref --verify --quiet "refs/heads/$branch"; then
+    git -C "$repo_dir" worktree add "$dest" "$branch" || return
+  elif git -C "$repo_dir" show-ref --verify --quiet "refs/remotes/origin/$branch"; then
+    git -C "$repo_dir" worktree add --track -b "$branch" "$dest" "origin/$branch" || return
+  else
+    git -C "$repo_dir" worktree add -b "$branch" "$dest" "$default" || return
+  fi
+  cd "$dest"
+}
+
+# remove a worktree under ~/wrk, never the ~/src clone; branch is kept - usage: rmwt
+rmwt() {
+  _wt_check || return 1
+  local wt_dir main common
+  wt_dir=$(_wt_pick "remove> ") || return
+  [[ -n $wt_dir ]] || return 1
+  if [[ $wt_dir != "$HOME"/wrk/* ]]; then
+    echo "rmwt: refusing to remove $wt_dir (not under ~/wrk)" >&2
+    return 1
+  fi
+  common=$(git -C "$wt_dir" rev-parse --path-format=absolute --git-common-dir) || return
+  main=${common:h}
+  if [[ $PWD == "$wt_dir" || $PWD == "$wt_dir"/* ]]; then
+    cd "$main"
+  fi
+  git -C "$main" worktree remove "$wt_dir"
+}

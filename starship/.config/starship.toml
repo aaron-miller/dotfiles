@@ -2,8 +2,8 @@
 "$schema" = 'https://starship.rs/config-schema.json'
 
 format = """
-$directory\
-$git_branch\
+${custom.dir}\
+${custom.git}\
 $git_status\
 $git_metrics\
 $package\
@@ -15,6 +15,43 @@ add_newline = false
 
 [git_metrics]
 disabled = false
+
+# Directory: "/" at a repo root, path relative to the root inside a repo,
+# and ~-relative path (truncated to the last 3 components) elsewhere
+[custom.dir]
+when = true
+style = "bold cyan"
+format = "[$output]($style) "
+command = '''
+if git rev-parse --is-inside-work-tree >/dev/null 2>&1; then
+  prefix=$(git rev-parse --show-prefix)
+  if [ -z "$prefix" ]; then echo "/"; else echo "/${prefix%/}"; fi
+else
+  p=$PWD
+  case $p in
+    "$HOME") p="~" ;;
+    "$HOME"/*) p="~${p#"$HOME"}" ;;
+  esac
+  slashes=$(printf '%s' "$p" | tr -cd / | wc -c | tr -d ' ')
+  if [ "$slashes" -gt 3 ]; then
+    printf '%s' "$p" | awk -F/ '{print "…/" $(NF-2) "/" $(NF-1) "/" $NF}'
+  else
+    printf '%s' "$p"
+  fi
+fi
+'''
+
+# Git: repo/branch (worktrees show the main repo name, not the folder name)
+[custom.git]
+when = 'git rev-parse --is-inside-work-tree >/dev/null 2>&1'
+style = "bold purple"
+format = "on [$output]($style) "
+command = '''
+common=$(git rev-parse --path-format=absolute --git-common-dir)
+repo=$(basename "$(dirname "$common")")
+branch=$(git symbolic-ref --quiet --short HEAD || git rev-parse --short HEAD)
+echo "$repo/$branch"
+'''
 
 # Replace the '❯' symbol in the prompt with '➜'
 [character] # The name of the module we are configuring is 'character'
