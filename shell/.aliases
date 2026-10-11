@@ -33,6 +33,7 @@ alias gstp="git stash pop"
 alias copy="pbcopy"
 alias paste="pbpaste"
 alias oc="opencode"
+alias ocp="opencode pair"
 
 alias k="kubectl"
 alias ktx="kubectx"
