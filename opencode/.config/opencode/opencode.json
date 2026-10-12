@@ -4,55 +4,9 @@
   "lsp": true,
   "plugin": [],
   "agents": {
-    "build": { "color": "#D32F2F" }
+    "build": { "color": "#B4433C" }
   },
-  "provider": {
-    "litellm": {
-      "npm": "@ai-sdk/openai-compatible",
-      "name": "LiteLLM",
-      "options": {
-        "baseURL": "https://litellm.urbanbear.dev/v1"
-      },
-      "models": {
-        "gpt-5.6": {
-          "name": "gpt-5.6"
-        },
-        "gpt-5.5": {
-          "name": "gpt-5.5"
-        },
-        "gpt-5.5-pro": {
-          "name": "gpt-5.5-pro"
-        },
-        "claude-opus-5": {
-          "name": "claude-opus-5"
-        },
-        "claude-opus-4-8": {
-          "name": "claude-opus-4-8"
-        },
-        "deepseek-v4-flash": {
-          "name": "deepseek-v4-flash"
-        },
-        "deepseek-v4-pro": {
-          "name": "deepseek-v4-pro"
-        }
-      }
-    },
-    "agentgateway": {
-      "npm": "@ai-sdk/openai-compatible",
-      "name": "Agentgateway",
-      "options": {
-        "baseURL": "{env:AGENTGATEWAY_BASE_URL}",
-        "headers": {
-          "Authorization": "Bearer {env:AGENTGATEWAY_API_KEY}"
-        }
-      },
-      "models": {
-        "claude-sonnet": { "name": "Claude Sonnet (agentgateway)" },
-        "claude-opus": { "name": "Claude Opus (agentgateway)" },
-        "auto": { "name": "Semantic Router" }
-      }
-    }
-  },
+  "provider": {},
   "mcp": {
     "servers": {
       "context7": {
