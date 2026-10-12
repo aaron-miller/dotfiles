@@ -1,6 +1,11 @@
 export EDITOR=nvim
 export BROWSER=firefox
 
+export PATH="$HOME/.scripts:$PATH"
+
+# machine-local settings, not committed (e.g. WT_BRANCH_PREFIX)
+[[ -f ~/.zshrc.local ]] && source ~/.zshrc.local
+
 # Disable Pi version update check on startup
 export PI_SKIP_VERSION_CHECK=1
 
