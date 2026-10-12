@@ -1,0 +1,264 @@
+#!/usr/bin/env -S uv run --script
+# /// script
+# requires-python = ">=3.11"
+# dependencies = ["libtmux>=0.61,<0.70", "pyyaml>=6,<7"]
+# ///
+"""workflow: tmux workspaces (one session per ticket) and spaces (one window per worktree)."""
+
+import argparse
+import os
+import re
+import subprocess
+import sys
+from pathlib import Path
+
+import libtmux
+import yaml
+from libtmux.constants import PaneDirection
+
+WRK = Path.home() / "wrk"
+TEMPLATES = Path.home() / ".config" / "workspace" / "spaces"
+WORKTREE = Path(__file__).resolve().parent / "worktree"
+NAME_RE = re.compile(r"^[A-Za-z0-9][A-Za-z0-9_-]*$")
+PANE_DIRECTIONS = {"h": PaneDirection.Right, "v": PaneDirection.Below}
+
+
+def die(msg, code=1):
+    print(f"workflow: {msg}", file=sys.stderr)
+    sys.exit(code)
+
+
+def check_name(name, what):
+    if not NAME_RE.match(name):
+        die(f"invalid {what}: {name!r}")
+
+
+def running(srv, name):
+    return srv.has_session(name)
+
+
+def attach(name):
+    verb = "switch-client" if os.environ.get("TMUX") else "attach-session"
+    subprocess.run(["tmux", verb, "-t", name], check=False)
+
+
+def worktrees(ticket):
+    r = subprocess.run([str(WORKTREE), "ls", ticket], capture_output=True, text=True)
+    if r.returncode:
+        die(f"could not list spaces for {ticket}")
+    return [line for line in r.stdout.splitlines() if line]
+
+
+def check_workspace(ticket):
+    spaces = worktrees(ticket)
+    if not spaces:
+        print(f"{ticket}: no spaces")
+    ok = True
+    for path in spaces:
+        print(f"== {path}", flush=True)
+        ok &= subprocess.run([str(WORKTREE), "check", path]).returncode == 0
+    print(f"{ticket}: {'ready' if ok else 'not ready'}")
+    return ok
+
+
+def prune_empty(root):
+    for dirpath, _, _ in os.walk(root, topdown=False):
+        try:
+            os.rmdir(dirpath)
+        except OSError:
+            pass
+    return not root.exists()
+
+
+def load_template(name):
+    check_name(name, "template")
+    path = TEMPLATES / f"{name}.yaml"
+    if not path.is_file():
+        die(f"no template at {path}")
+    data = yaml.safe_load(path.read_text())
+    panes = data.get("panes") if isinstance(data, dict) else None
+    if not isinstance(panes, list) or not panes:
+        die(f"{path}: expected a non-empty 'panes' list")
+    for i, entry in enumerate(panes):
+        if not isinstance(entry, dict):
+            die(f"{path}: pane {i} must be a mapping")
+        if i == 0 and "split" in entry:
+            die(f"{path}: the first pane cannot have 'split'")
+        if i > 0 and entry.get("split") not in PANE_DIRECTIONS:
+            die(f"{path}: pane {i} needs split: h or v")
+        if "command" in entry and not isinstance(entry["command"], str):
+            die(f"{path}: pane {i} command must be a string")
+    return panes
+
+
+def current_pane(srv):
+    pane_id = os.environ.get("TMUX_PANE")
+    if not pane_id:
+        die("this command must run inside a tmux pane")
+    pane = srv.panes.get(pane_id=pane_id, default=None)
+    if pane is None:
+        die(f"pane {pane_id} not found")
+    return pane
+
+
+def ws_new(args):
+    check_name(args.ticket, "ticket")
+    srv = libtmux.Server()
+    path = WRK / args.ticket
+    path.mkdir(parents=True, exist_ok=True)
+    if running(srv, args.ticket):
+        print(f"workspace {args.ticket} already running")
+        return
+    srv.new_session(
+        session_name=args.ticket,
+        start_directory=str(path),
+        window_name="pi",
+        window_command="pi",
+        attach=False,
+    )
+    print(f"created workspace {args.ticket} at {path}")
+
+
+def ws_attach(args):
+    check_name(args.ticket, "ticket")
+    if not running(libtmux.Server(), args.ticket):
+        die(f"no running session for {args.ticket}; run: workspace new {args.ticket}")
+    attach(args.ticket)
+
+
+def ws_ls(args):
+    if not WRK.is_dir():
+        return
+    srv = libtmux.Server()
+    for d in sorted(p for p in WRK.iterdir() if p.is_dir()):
+        print(f"{d.name}\t{'running' if running(srv, d.name) else 'stopped'}")
+
+
+def ws_check(args):
+    check_name(args.ticket, "ticket")
+    if not (WRK / args.ticket).is_dir():
+        die(f"no workspace {args.ticket}")
+    if not check_workspace(args.ticket):
+        sys.exit(1)
+
+
+def ws_rm(args):
+    check_name(args.ticket, "ticket")
+    path = WRK / args.ticket
+    if not path.is_dir():
+        die(f"no workspace {args.ticket}")
+    if not check_workspace(args.ticket):
+        die("not ready to remove; resolve the items above")
+
+    srv = libtmux.Server()
+    if running(srv, args.ticket):
+        srv.kill_session(args.ticket)
+    for space in worktrees(args.ticket):
+        if subprocess.run([str(WORKTREE), "rm", space]).returncode:
+            die(f"failed to remove {space}; workspace directory kept")
+
+    if prune_empty(path):
+        print(f"removed workspace {args.ticket}")
+    else:
+        print(f"kept {path} (contains files that aren't part of a space)")
+
+
+def space_new(args):
+    check_name(args.ticket, "ticket")
+    srv = libtmux.Server()
+    if not running(srv, args.ticket):
+        die(f"no running session for {args.ticket}; run: workspace new {args.ticket}")
+    sess = srv.sessions.get(session_name=args.ticket)
+
+    r = subprocess.run(
+        [str(WORKTREE), "new", args.ticket, args.repo, args.desc],
+        stdout=subprocess.PIPE,
+        text=True,
+    )
+    if r.returncode:
+        sys.exit(r.returncode)
+    path = r.stdout.strip()
+
+    name = f"{args.repo}-{args.desc}"
+    window = sess.windows.get(window_name=name, default=None)
+    if window is None:
+        window = sess.new_window(window_name=name, start_directory=path, attach=False)
+    window.select()
+    print(f"space {name} at {path}")
+
+
+def space_configure(args):
+    panes = load_template(args.template)
+    pane = current_pane(libtmux.Server())
+    count = len(pane.window.panes)
+    if count != 1:
+        die(f"window has {count} panes; configure needs a window with one pane")
+
+    cwd = pane.pane_current_path
+    if panes[0].get("command"):
+        pane.send_keys(panes[0]["command"])
+    previous = pane
+    for entry in panes[1:]:
+        new = previous.split(
+            direction=PANE_DIRECTIONS[entry["split"]],
+            start_directory=cwd,
+        )
+        if entry.get("command"):
+            new.send_keys(entry["command"])
+        previous = new
+    print(f"applied {args.template} ({len(panes)} panes)")
+
+
+def space_rm(args):
+    pane = current_pane(libtmux.Server())
+    window = pane.window
+    top = subprocess.run(
+        ["git", "-C", pane.pane_current_path, "rev-parse", "--show-toplevel"],
+        capture_output=True,
+        text=True,
+    )
+    if top.returncode:
+        die("current pane is not inside a git worktree")
+    path = Path(top.stdout.strip()).resolve()
+    if not str(path).startswith(str(WRK.resolve()) + os.sep):
+        die(f"refusing to remove {path} (not under {WRK})")
+
+    if subprocess.run([str(WORKTREE), "rm", str(path)]).returncode:
+        die("space not removed; window kept")
+    window.kill()
+
+
+def build_parser():
+    parser = argparse.ArgumentParser(prog="workflow")
+    groups = parser.add_subparsers(dest="group", required=True)
+
+    wsp = groups.add_parser("workspace", help="one tmux session per ticket")
+    wsc = wsp.add_subparsers(dest="cmd", required=True)
+    for name, func in (("new", ws_new), ("attach", ws_attach), ("check", ws_check), ("rm", ws_rm)):
+        sub = wsc.add_parser(name)
+        sub.add_argument("ticket")
+        sub.set_defaults(func=func)
+    wsc.add_parser("ls").set_defaults(func=ws_ls)
+
+    spp = groups.add_parser("space", help="one tmux window per repo worktree")
+    spc = spp.add_subparsers(dest="cmd", required=True)
+    new = spc.add_parser("new")
+    new.add_argument("ticket")
+    new.add_argument("repo")
+    new.add_argument("desc")
+    new.set_defaults(func=space_new)
+    configure = spc.add_parser("configure")
+    configure.add_argument("template")
+    configure.set_defaults(func=space_configure)
+    spc.add_parser("rm").set_defaults(func=space_rm)
+
+    return parser
+
+
+def main(argv=None):
+    args = build_parser().parse_args(argv)
+    args.func(args)
+
+
+if __name__ == "__main__":
+    main()

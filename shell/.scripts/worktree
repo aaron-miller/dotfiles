@@ -1,0 +1,173 @@
+#!/usr/bin/env bash
+# worktree: git worktrees for repos cloned in ~/src, placed at
+# ~/wrk/<workspace>/<repo>/<branch>. Branch is $WT_BRANCH_PREFIX/<workspace>/<desc>.
+set -euo pipefail
+
+usage() {
+  cat >&2 <<'EOF'
+usage:
+  worktree new <workspace> <repo> <desc>
+  worktree ls [<workspace>]
+  worktree check <path>
+  worktree rm <path>
+EOF
+  exit 2
+}
+
+die() {
+  echo "worktree: $*" >&2
+  exit 1
+}
+
+valid_name() {
+  [[ $1 =~ ^[A-Za-z0-9][A-Za-z0-9_-]*$ ]]
+}
+
+valid_repo() {
+  [[ $1 =~ ^[A-Za-z0-9][A-Za-z0-9._-]*$ ]]
+}
+
+is_worktree() {
+  [[ -f $1/.git ]]
+}
+
+branch_name() {
+  local ws=$1 desc=$2 prefix=${WT_BRANCH_PREFIX:-}
+  if [[ -n $prefix ]]; then
+    printf '%s/%s/%s' "$prefix" "$ws" "$desc"
+  else
+    printf '%s/%s' "$ws" "$desc"
+  fi
+}
+
+base_ref() {
+  git -C "$1" symbolic-ref --quiet --short refs/remotes/origin/HEAD 2>/dev/null || echo origin/main
+}
+
+# Prints how the branch was merged (pr, ancestor, or patch), or nothing.
+merged_how() {
+  local path=$1 branch=$2 base=$3 prs=0 cherry
+  [[ -n $branch ]] || return 0
+  if command -v gh >/dev/null 2>&1; then
+    prs=$(cd "$path" && gh pr list --head "$branch" --state merged --json number --jq 'length' 2>/dev/null || echo 0)
+  fi
+  if [[ ${prs:-0} -gt 0 ]]; then
+    echo pr
+    return 0
+  fi
+  if git -C "$path" merge-base --is-ancestor HEAD "$base" 2>/dev/null; then
+    echo ancestor
+    return 0
+  fi
+  cherry=$(git -C "$path" cherry "$base" HEAD 2>/dev/null) || return 0
+  if ! grep -q '^+' <<<"$cherry"; then
+    echo patch
+  fi
+}
+
+cmd_new() {
+  (( $# == 3 )) || usage
+  local ws=$1 repo=$2 desc=$3
+  valid_name "$ws" || die "invalid workspace name: $ws"
+  valid_name "$desc" || die "invalid desc: $desc"
+  valid_repo "$repo" || die "invalid repo name: $repo"
+
+  local repo_dir=$HOME/src/$repo
+  git -C "$repo_dir" rev-parse --git-dir >/dev/null 2>&1 || die "no git repo at $repo_dir"
+
+  local branch dest default
+  branch=$(branch_name "$ws" "$desc")
+  dest=$HOME/wrk/$ws/$repo/$branch
+
+  if [[ -e $dest ]]; then
+    is_worktree "$dest" || die "exists but is not a worktree: $dest"
+    printf '%s\n' "$dest"
+    return 0
+  fi
+
+  git -C "$repo_dir" fetch --prune origin >&2 || die "fetch failed in $repo_dir"
+  default=$(base_ref "$repo_dir")
+
+  mkdir -p "${dest%/*}"
+  if git -C "$repo_dir" show-ref --verify --quiet "refs/heads/$branch"; then
+    git -C "$repo_dir" worktree add "$dest" "$branch" >&2
+  elif git -C "$repo_dir" show-ref --verify --quiet "refs/remotes/origin/$branch"; then
+    git -C "$repo_dir" worktree add --track -b "$branch" "$dest" "origin/$branch" >&2
+  else
+    git -C "$repo_dir" worktree add -b "$branch" "$dest" "$default" >&2
+  fi
+  printf '%s\n' "$dest"
+}
+
+cmd_ls() {
+  local root=$HOME/wrk
+  if (( $# == 1 )); then
+    valid_name "$1" || die "invalid workspace name: $1"
+    root=$root/$1
+  elif (( $# > 1 )); then
+    usage
+  fi
+  [[ -d $root ]] || return 0
+  find "$root" -name .git -type f 2>/dev/null | sed 's#/\.git$##' | sort || true
+}
+
+# Prints the state of a worktree. Returns non-zero if it has dirty files or
+# commits that aren't on any remote.
+cmd_check() {
+  (( $# == 1 )) || usage
+  local path=$1
+  is_worktree "$path" || die "not a worktree: $path"
+
+  local base branch dirty unpushed how
+  base=$(base_ref "$path")
+  branch=$(git -C "$path" symbolic-ref --quiet --short HEAD || true)
+  dirty=$(git -C "$path" status --porcelain | wc -l | tr -d ' ')
+  unpushed=$(git -C "$path" rev-list --count HEAD --not --remotes)
+  how=$(merged_how "$path" "$branch" "$base")
+
+  printf 'path:     %s\n' "$path"
+  printf 'branch:   %s\n' "${branch:-(detached)}"
+  printf 'dirty:    %s\n' "$dirty"
+  printf 'unpushed: %s\n' "$unpushed"
+  printf 'merged:   %s\n' "${how:-no}"
+
+  (( dirty == 0 && unpushed == 0 ))
+}
+
+cmd_rm() {
+  (( $# == 1 )) || usage
+  local path
+  path=$(cd "$1" 2>/dev/null && pwd) || die "no such directory: $1"
+  [[ $path == "$HOME"/wrk/* ]] || die "refusing to remove $path (not under ~/wrk)"
+  is_worktree "$path" || die "not a worktree: $path"
+
+  cmd_check "$path" || die "not ready to remove $path (see above)"
+
+  local common main branch base how
+  common=$(git -C "$path" rev-parse --path-format=absolute --git-common-dir)
+  main=$(dirname "$common")
+  branch=$(git -C "$path" symbolic-ref --quiet --short HEAD || true)
+  base=$(base_ref "$path")
+  how=$(merged_how "$path" "$branch" "$base")
+
+  git -C "$main" worktree remove "$path"
+
+  if [[ -n $branch && -n $how ]]; then
+    git -C "$main" branch -D "$branch" >/dev/null
+    echo "removed $path (deleted branch $branch, merged via $how)"
+  else
+    echo "removed $path (kept branch ${branch:-detached})"
+  fi
+}
+
+cmd=${1:-}
+if (( $# )); then
+  shift
+fi
+case $cmd in
+  new) cmd_new "$@" ;;
+  ls) cmd_ls "$@" ;;
+  check) cmd_check "$@" ;;
+  rm) cmd_rm "$@" ;;
+  *) usage ;;
+esac

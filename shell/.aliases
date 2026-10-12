@@ -49,3 +49,6 @@ alias dotz="nvim ~/.dotfiles/zsh"
 alias dott="nvim ~/.dotfiles/tmux/.tmux.conf"
 
 alias ai='noglob ask-llm'
+
+alias workspace='workflow workspace'
+alias space='workflow space'
