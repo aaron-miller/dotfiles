@@ -5,7 +5,7 @@ My personal dotfiles to be used with GNU Stow.
 ## Quickstart
 
 ```bash
-brew install gh go neovim starship stow tmux && \
+brew install gh go neovim starship stow tmux uv && \
 brew install --cask \
   1password aerospace dbeaver-community firefox firefox@developer-edition \
   font-hack-nerd-font font-inconsolata-go-nerd-font google-chrome macvim \
