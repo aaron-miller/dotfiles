@@ -50,7 +50,7 @@ command = '''
 common=$(git rev-parse --path-format=absolute --git-common-dir)
 repo=$(basename "$(dirname "$common")")
 branch=$(git symbolic-ref --quiet --short HEAD || git rev-parse --short HEAD)
-echo "$repo/$branch"
+echo "$repo:$branch"
 '''
 
 # Replace the '❯' symbol in the prompt with '➜'
