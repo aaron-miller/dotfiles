@@ -1,6 +1,9 @@
 export EDITOR=nvim
 export BROWSER=firefox
 
+# Nix user profile on non-NixOS Linux (nix-darwin sets this up on macOS)
+[[ $OSTYPE == linux* && -d ~/.nix-profile/bin ]] && export PATH="$HOME/.nix-profile/bin:$PATH"
+
 export PATH="$HOME/.scripts:$PATH"
 
 # machine-local settings, not committed (e.g. WT_BRANCH_PREFIX)
@@ -13,12 +16,13 @@ export PI_SKIP_VERSION_CHECK=1
 bindkey -v
 bindkey '^R' history-incremental-search-backward
 
-# Load Homebrew shell completion
-if type brew &>/dev/null; then
-  FPATH=$(brew --prefix)/share/zsh/site-functions:$FPATH
-fi
+# Completions from the home-manager profile (/etc/profiles on macOS, ~/.nix-profile on Linux)
+for profile in /etc/profiles/per-user/$USER ~/.nix-profile; do
+  [[ -d $profile/share/zsh/site-functions ]] && FPATH=$profile/share/zsh/site-functions:$FPATH
+done
 
 # completion
+fpath=(~/.zfunc $fpath)
 autoload -U compinit; compinit
 zstyle ':completion:*' use-cache on
 zstyle ':completion:*' cache-path ~/.zsh/cache
@@ -62,5 +66,12 @@ bindkey '^x^e' edit-command-line
 
 eval "$(starship init zsh)"
 
-source $(brew --prefix)/share/zsh-syntax-highlighting/zsh-syntax-highlighting.zsh
+for profile in /etc/profiles/per-user/$USER ~/.nix-profile; do
+  if [[ -r $profile/share/zsh-syntax-highlighting/zsh-syntax-highlighting.zsh ]]; then
+    source $profile/share/zsh-syntax-highlighting/zsh-syntax-highlighting.zsh
+    break
+  fi
+done
 source <(fzf --zsh)
+
+eval "$(direnv hook zsh)"

@@ -1,68 +1,81 @@
 {
-  description = "Aaron's dotfiles: packages installed inside Linux devcontainers.";
+  description = "Aaron's machines: macOS (nix-darwin) and Linux (home-manager).";
 
   inputs = {
     nixpkgs.url = "github:NixOS/nixpkgs/nixpkgs-unstable";
-    flake-utils.url = "github:numtide/flake-utils";
+
+    home-manager = {
+      url = "github:nix-community/home-manager";
+      inputs.nixpkgs.follows = "nixpkgs";
+    };
+
+    nix-darwin = {
+      url = "github:LnL7/nix-darwin";
+      inputs.nixpkgs.follows = "nixpkgs";
+    };
+
+    nix-homebrew.url = "github:zhaofengli/nix-homebrew";
+
+    # Same Homebrew revision nix-homebrew builds from, for its zsh completions.
+    brew-src.follows = "nix-homebrew/brew-src";
   };
 
-  outputs = { self, nixpkgs, flake-utils }:
-    # Only Linux devcontainers are supported.
-    flake-utils.lib.eachSystem [ "x86_64-linux" "aarch64-linux" ] (system:
-      let
-        pkgs = import nixpkgs { inherit system; };
+  outputs = { self, nixpkgs, home-manager, nix-darwin, nix-homebrew, ... }@inputs:
+    let
+      primaryUser = "aaron";
 
-        packages = with pkgs; [
-          # Editors
-          vim
-          neovim
-
-          # Shell & prompt
-          zsh
-          starship
-          tmux
-
-          # Dotfiles management
-          stow
-
-          # Core CLI tools
-          git
-          git-lfs
-          gh
-          curl
-          wget
-          jq
-          yq-go
-          ripgrep
-          fd
-          fzf
-          bat
-          tree
-          htop
-          direnv
-
-          # Clipboard integration (X11 + Wayland)
-          xclip
-          wl-clipboard
-
-          # Dev tooling
-          gnumake
-          coreutils
-          gnused
-          gawk
-          gcc
-          pre-commit
-
-          # Kubernetes
-          kubectl
-          kubectx
-          kubernetes-helm
-          argocd
-        ];
-      in {
-        packages.default = pkgs.buildEnv {
-          name = "dotfiles-env";
-          paths = packages;
+      # One entry per Linux machine. The key is the home-manager config name
+      # (`home-manager switch --flake ~/.dotfiles#<key>`).
+      linuxHosts = {
+        "aaron@linux" = {
+          username = "aaron";
+          system = "x86_64-linux";
         };
-      });
+      };
+
+      mkPkgs = system: import nixpkgs {
+        inherit system;
+        config.allowUnfree = true;
+      };
+    in {
+      darwinConfigurations.proteus = nix-darwin.lib.darwinSystem {
+        system = "aarch64-darwin";
+        specialArgs = { inherit inputs self primaryUser; };
+        modules = [ ./darwin ];
+      };
+
+      homeConfigurations = nixpkgs.lib.mapAttrs (_: host:
+        home-manager.lib.homeManagerConfiguration {
+          pkgs = mkPkgs host.system;
+          extraSpecialArgs = { primaryUser = host.username; };
+          modules = [
+            ./home
+            ./home/linux.nix
+            {
+              home = {
+                homeDirectory = "/home/${host.username}";
+              };
+            }
+          ];
+        }) linuxHosts;
+
+      templates = {
+        go = {
+          path = ./templates/go;
+          description = "Go development shell";
+        };
+        python = {
+          path = ./templates/python;
+          description = "Python development shell (uv)";
+        };
+        node = {
+          path = ./templates/node;
+          description = "Node/TypeScript development shell";
+        };
+        rust = {
+          path = ./templates/rust;
+          description = "Rust development shell";
+        };
+      };
+    };
 }
