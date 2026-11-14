@@ -5,6 +5,7 @@
   imports = [
     ./common.nix
     ./files.nix
+    ./neovim.nix
   ];
 
   home = {
