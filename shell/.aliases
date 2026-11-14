@@ -47,6 +47,13 @@ alias dot="cd ~/.dotfiles"
 alias dotn="cd ~/.dotfiles/nvim/.config/nvim; nvim ."
 alias dotz="nvim ~/.dotfiles/zsh"
 alias dott="nvim ~/.dotfiles/tmux/.tmux.conf"
+alias dotnix="nvim ~/.dotfiles/nix"
+alias dotal="nvim ~/.dotfiles/shell/.aliases"
+alias dotfn="nvim ~/.dotfiles/shell/.functions"
+alias dotzr="nvim ~/.dotfiles/zsh/.zshrc"
+
+alias nrs="rebuild"
+alias nfu="(cd ~/.dotfiles && nix flake update)"
 
 alias ai='noglob ask-llm'
 

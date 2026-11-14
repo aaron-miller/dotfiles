@@ -1,3 +1,12 @@
+# nix - rebuild the system for this host (LocalHostName is the stable name)
+rebuild() {
+  case "$OSTYPE" in
+    darwin*) sudo darwin-rebuild switch --flake ~/.dotfiles#"$(scutil --get LocalHostName)" ;;
+    linux*) home-manager switch --flake ~/.dotfiles#aaron@linux ;;
+    *) echo "rebuild: unsupported OS: $OSTYPE" >&2; return 1 ;;
+  esac
+}
+
 # aws
 awsp() {
   if ! command -v aws &>/dev/null; then
