@@ -19,58 +19,28 @@
     gh
     curl
     wget
-    msmtp
 
     # Core CLI
     bat
     fd
     ripgrep
     jq
-    yq-go
-    dasel
-    yj
     tree
     htop
-    hyperfine
-    pass
-    w3m
-    newsboat
-    aerc
-    himalaya
     rclone
     yt-dlp
     ffmpeg
     exiftool
-    hugo
-    lychee
 
-    # Kubernetes and containers
-    kubectl
-    kubectx
-    kubernetes-helm
-    argocd
-    k9s
-    operator-sdk
-    doctl
     podman
     lazydocker
     lazygit
 
     # Development
-    gnumake
-    cmake
     go-task
-    pre-commit
-    rustup
-    uv
-    typescript
-    renovate
-    html-tidy
 
     # AI tools
     opencode
-    ollama
-    llm
     pi-coding-agent
     python3Packages.huggingface-hub
   ];
