@@ -34,12 +34,11 @@
         wvous-br-corner = 14; # bottom-right hot corner: Quick Note
 
         persistent-apps = [
-          "/System/Applications/Safari.app"
+          "/Applications/Safari.app"
           "/Applications/Firefox.app"
           "/Applications/Ghostty.app"
           "/System/Applications/Messages.app"
           "/System/Applications/Mail.app"
-          "/Applications/NetNewsWire.app"
           "/System/Applications/Calendar.app"
           "/System/Applications/Notes.app"
           "/Applications/Obsidian.app"
