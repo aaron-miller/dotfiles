@@ -35,7 +35,7 @@ source ~/.aliases
 # functions
 source ~/.functions
 
-# suffix aliases
+# suffix aliases, opens editor when typing out filename
 alias -s html=w3m
 alias -s txt=${EDITOR}
 alias -s go=${EDITOR}
@@ -46,16 +46,10 @@ alias -s json=${EDITOR}
 alias -s yaml=${EDITOR}
 alias -s toml=${EDITOR}
 
-
-# widgets
-
 # edit my current command line in my $EDITOR with <ctrl-x ctrl-e>
 autoload -Uz edit-command-line
 zle -N edit-command-line
 bindkey '^x^e' edit-command-line
-
-# enable the magic-space key, expand globs when pressing space
-# bindkey ' ' magic-space
 
 eval "$(starship init zsh)"
 
