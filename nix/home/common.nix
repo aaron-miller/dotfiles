@@ -38,17 +38,11 @@
 
     # Development
     go-task
+    devenv
 
     # AI tools
     opencode
     pi-coding-agent
     python3Packages.huggingface-hub
   ];
-
-  programs.direnv = {
-    enable = true;
-    nix-direnv.enable = true;
-    # zsh/.zshrc already runs `direnv hook zsh`.
-    enableZshIntegration = false;
-  };
 }
