@@ -30,7 +30,7 @@
     enable = true;
     user = primaryUser;
     autoMigrate = true;
-    # Keeps `brew shellenv` out of /etc/zshrc. Completions come from home/zfunc below.
+    # Keeps `brew shellenv` out of /etc/zshrc. Completions come from nix/home/zfunc below.
     enableZshIntegration = false;
   };
 

@@ -1,5 +1,5 @@
 # GUI apps and the few formulae nixpkgs doesn't provide. Homebrew is installed
-# and managed by nix-homebrew (see darwin/default.nix).
+# and managed by nix-homebrew (see nix/darwin/default.nix).
 { inputs, primaryUser, ... }:
 {
   home-manager.users.${primaryUser}.home.file.".zfunc/_brew".source =

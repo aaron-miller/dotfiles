@@ -4,11 +4,11 @@ Personal dotfiles managed with Nix flakes (nix-darwin on macOS, home-manager on 
 
 ## Layout and editing
 
-- Each top-level config directory is a package. Its tree mirrors `$HOME`: `zsh/.zshrc` -> `~/.zshrc`, `opencode/.config/opencode/` -> `~/.config/opencode/`. `home/files.nix` links these into `$HOME`.
+- Each top-level config directory is a package. Its tree mirrors `$HOME`: `zsh/.zshrc` -> `~/.zshrc`, `opencode/.config/opencode/` -> `~/.config/opencode/`. `nix/home/files.nix` links these into `$HOME`.
 - Links are editable: `~/.zshrc` points at the repo file, so editing the repo copy takes effect immediately. Never edit `~/...` directly.
 - New config files need `git add` (flakes only see tracked files) and a rebuild, because links are created per file.
-- Packages go in `home/common.nix` (both OSes) or `home/linux.nix` (Linux only). Mac GUI apps and taps go in `darwin/homebrew.nix`. macOS defaults go in `darwin/settings.nix`. Prefer nixpkgs over brew.
-- `linkedDirs` in `home/files.nix` lists gitignored directories that are linked whole (plugins and runtime state). Add to it when a gitignored directory must exist in `$HOME`.
+- Packages go in `nix/home/common.nix` (both OSes) or `nix/home/linux.nix` (Linux only). Mac GUI apps and taps go in `nix/darwin/homebrew.nix`. macOS defaults go in `nix/darwin/settings.nix`. Prefer nixpkgs over brew.
+- `linkedDirs` in `nix/home/files.nix` lists gitignored directories that are linked whole (plugins and runtime state). Add to it when a gitignored directory must exist in `$HOME`.
 - Commit subjects are short, lowercase, imperative (e.g. `disable ghostty blinking cursor`). Branch: `main`.
 
 ## Commands

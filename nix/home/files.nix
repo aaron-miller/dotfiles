@@ -6,7 +6,7 @@
 { config, lib, ... }:
 let
   cfg = config.dotfiles;
-  repo = ../.;
+  repo = ../..;
   dotfilesDir = "${config.home.homeDirectory}/.dotfiles";
 
   # Gitignored directories that hold plugins or runtime state. They aren't in

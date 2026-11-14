@@ -1,4 +1,4 @@
-# Home-manager config shared by every machine. Imported by darwin/default.nix
+# Home-manager config shared by every machine. Imported by nix/darwin/default.nix
 # on macOS and by flake.nix for Linux.
 { primaryUser, ... }:
 {

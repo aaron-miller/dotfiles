@@ -41,7 +41,7 @@
       darwinConfigurations.proteus = nix-darwin.lib.darwinSystem {
         system = "aarch64-darwin";
         specialArgs = { inherit inputs self primaryUser; };
-        modules = [ ./darwin ];
+        modules = [ ./nix/darwin ];
       };
 
       homeConfigurations = nixpkgs.lib.mapAttrs (_: host:
@@ -49,8 +49,8 @@
           pkgs = mkPkgs host.system;
           extraSpecialArgs = { primaryUser = host.username; };
           modules = [
-            ./home
-            ./home/linux.nix
+            ./nix/home
+            ./nix/home/linux.nix
             {
               home = {
                 homeDirectory = "/home/${host.username}";
@@ -58,24 +58,5 @@
             }
           ];
         }) linuxHosts;
-
-      templates = {
-        go = {
-          path = ./templates/go;
-          description = "Go development shell";
-        };
-        python = {
-          path = ./templates/python;
-          description = "Python development shell (uv)";
-        };
-        node = {
-          path = ./templates/node;
-          description = "Node/TypeScript development shell";
-        };
-        rust = {
-          path = ./templates/rust;
-          description = "Rust development shell";
-        };
-      };
     };
 }

@@ -39,17 +39,16 @@ its username and system (`x86_64-linux` or `aarch64-linux`).
 ## Everyday use
 
 - Edit a config file in the repo. The link updates immediately, with no rebuild.
-- Add a package: edit `home/common.nix` (both OSes) or `home/linux.nix`, then rebuild. Add a GUI app or tap formula to `darwin/homebrew.nix`.
+- Add a package: edit `nix/home/common.nix` (both OSes) or `nix/home/linux.nix`, then rebuild. Add a GUI app or tap formula to `nix/darwin/homebrew.nix`.
 - Add a new config file: `git add` it, then rebuild, because links are created
   per file.
 - Update pinned versions: `nix flake update`, then rebuild and commit
   `flake.lock`.
-- Start a project shell: `nix flake init -t ~/.dotfiles#go && direnv allow`.
 
 ## Homebrew on macOS
 
 Homebrew is installed and managed by nix-homebrew, which adopts an existing
 install at `/opt/homebrew`. Homebrew is only used for casks and the few
-formulae from third-party taps listed in `darwin/homebrew.nix`.
+formulae from third-party taps listed in `nix/darwin/homebrew.nix`.
 `onActivation.cleanup` is `"none"`, so anything installed by hand is kept. Once
 the lists are complete, change it to `"zap"` to remove the rest.
