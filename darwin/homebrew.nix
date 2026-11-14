@@ -18,9 +18,6 @@
 
     # Formulae from third-party taps, which nixpkgs doesn't provide.
     brews = [
-      "pi-coding-agent"
-      "hermes-agent"
-      "hf"
       # Not installed system-wide on macOS.
       "telnet"
     ];

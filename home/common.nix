@@ -71,6 +71,8 @@
     opencode
     ollama
     llm
+    pi-coding-agent
+    python3Packages.huggingface-hub
   ];
 
   programs.direnv = {
