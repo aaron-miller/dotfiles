@@ -11,8 +11,8 @@
     onActivation = {
       autoUpdate = false;
       upgrade = false;
-      # Set to "zap" once this list matches what's installed, to remove
-      # anything installed by hand.
+      # "uninstall" fails here: the switch runs brew cleanup as root, which
+      # can't load the tap. Clean up by hand with `brew bundle cleanup --force`.
       cleanup = "none";
     };
 
@@ -21,10 +21,12 @@
       "pi-coding-agent"
       "hermes-agent"
       "hf"
-      "antoniorodr/memo/memo"
-      "nano-collective/nanocoder/nanocoder"
-      "omlahore/tap/removemacai"
-      "steipete/tap/remindctl"
+      # Not installed system-wide on macOS.
+      "telnet"
+    ];
+
+    taps = [
+      "nikitabobko/tap"
     ];
 
     casks = [
