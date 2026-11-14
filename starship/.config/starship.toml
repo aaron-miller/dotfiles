@@ -2,6 +2,7 @@
 "$schema" = 'https://starship.rs/config-schema.json'
 
 format = """
+${custom.devenv}\
 ${custom.dir}\
 ${custom.git}\
 ${custom.git_branch}\
@@ -16,6 +17,13 @@ add_newline = false
 
 [git_metrics]
 disabled = false
+
+# Shown only inside a devenv shell (DEVENV_ROOT is exported there)
+[custom.devenv]
+when = '[ -n "$DEVENV_ROOT" ]'
+style = "bold teal"
+format = "[$output]($style) "
+command = "printf '❄'"
 
 # Directory: "/" at a repo root, path relative to the root inside a repo,
 # and ~-relative path (truncated to the last 3 components) elsewhere
