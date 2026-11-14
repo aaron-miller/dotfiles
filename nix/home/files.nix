@@ -48,6 +48,7 @@ in {
   config = {
     dotfiles.packages = [
       "curl"
+      "devenv"
       "ghostty"
       "git"
       "nvim"
