@@ -43,5 +43,6 @@
     opencode
     pi-coding-agent
     python3Packages.huggingface-hub
+    (llm.withPlugins { llm-openrouter = true; })
   ];
 }
