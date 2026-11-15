@@ -37,7 +37,6 @@
       "firefox@developer-edition"
       "font-hack-nerd-font"
       "font-inconsolata-go-nerd-font"
-      "ghostty"
       "google-chrome"
       "mullvad-vpn"
       "obsidian"

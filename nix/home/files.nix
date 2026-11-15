@@ -14,6 +14,7 @@ let
   linkedDirs = [
     "opencode/.config/opencode"
     "pi/.pi/agent"
+    "tmux/.config/tmux-bootstrap"
     "vim/.vim/plugged"
     "wrk/.config/workspace/spaces"
   ];
@@ -49,8 +50,8 @@ in {
     dotfiles.packages = [
       "curl"
       "devenv"
-      "ghostty"
       "git"
+      "irssi"
       "nvim"
       "opencode"
       "pi"

@@ -44,5 +44,13 @@
     pi-coding-agent
     python3Packages.huggingface-hub
     (llm.withPlugins { llm-openrouter = true; })
+
+    # Terminal apps (tmux-bootstrap sessions)
+    irssi
+    profanity
+    aerc
+    newsboat
+    rmpc
+    k9s
   ];
 }

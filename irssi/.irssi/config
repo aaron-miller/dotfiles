@@ -1,0 +1,12 @@
+keyboard = (
+  { key = "meta-!"; id = "command"; data = "WINDOW GOTO 11"; },
+  { key = "meta-@"; id = "command"; data = "WINDOW GOTO 12"; },
+  { key = "meta-#"; id = "command"; data = "WINDOW GOTO 13"; },
+  { key = "meta-$"; id = "command"; data = "WINDOW GOTO 14"; },
+  { key = "meta-%"; id = "command"; data = "WINDOW GOTO 15"; },
+  { key = "meta-^"; id = "command"; data = "WINDOW GOTO 16"; },
+  { key = "meta-&"; id = "command"; data = "WINDOW GOTO 17"; },
+  { key = "meta-*"; id = "command"; data = "WINDOW GOTO 18"; },
+  { key = "meta-("; id = "command"; data = "WINDOW GOTO 19"; },
+  { key = "meta-)"; id = "command"; data = "WINDOW GOTO 20"; }
+);

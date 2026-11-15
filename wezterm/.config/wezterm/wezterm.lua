@@ -15,6 +15,15 @@ config.keys = {
 	},
 }
 
+-- send alt+1..0 when cmd+1..0 is pressed
+for _, digit in ipairs({ "1", "2", "3", "4", "5", "6", "7", "8", "9", "0" }) do
+	table.insert(config.keys, {
+		key = digit,
+		mods = "CMD",
+		action = wezterm.action.SendString("\x1b" .. digit),
+	})
+end
+
 -- use Hack with Nerd Font glyphs
 wezterm.font("Hack Nerd Font Mono", { weight = "Regular", stretch = "Normal", style = "Normal" })
 config.font_size = 20

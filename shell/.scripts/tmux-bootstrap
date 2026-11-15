@@ -1,0 +1,52 @@
+#!/usr/bin/env bash
+# Create the dotfiles, general, chat, and clusters tmux sessions, then attach.
+# Usage: tmux-bootstrap [session]   (default: dotfiles)
+# Clusters come from $TMUX_BOOTSTRAP_CLUSTERS, or ~/.config/tmux-bootstrap/clusters.
+set -euo pipefail
+
+clusters_file=${TMUX_BOOTSTRAP_CLUSTERS:-$HOME/.config/tmux-bootstrap/clusters}
+dotfiles=$HOME/.dotfiles
+
+has() { tmux has-session -t "=$1" 2>/dev/null; }
+
+if ! has dotfiles; then
+  tmux new-session -d -s dotfiles -n dotfiles -c "$dotfiles" opencode
+  tmux split-window -h -t dotfiles: -c "$dotfiles" nvim
+fi
+
+if ! has general; then
+  tmux new-session -d -s general -n aerc -c "$HOME" aerc
+  tmux new-window -d -t general: -n newsboat -c "$HOME" newsboat
+  tmux new-window -d -t general: -n rmpc -c "$HOME" rmpc
+fi
+
+if ! has chat; then
+  tmux new-session -d -s chat -n irssi -c "$HOME" irssi
+  tmux new-window -d -t chat: -n profanity -c "$HOME" profanity
+fi
+
+if ! has clusters; then
+  if [[ -f $clusters_file ]]; then
+    first=1
+    while read -r name context; do
+      [[ -z $name || $name == \#* ]] && continue
+      [[ -n $context ]] || { echo "tmux-bootstrap: no context for '$name' in $clusters_file" >&2; exit 1; }
+      cmd="k9s --context $(printf %q "$context")"
+      if (( first )); then
+        tmux new-session -d -s clusters -n "$name" -c "$HOME" "$cmd"
+        first=0
+      else
+        tmux new-window -d -t clusters: -n "$name" -c "$HOME" "$cmd"
+      fi
+    done < "$clusters_file"
+  else
+    echo "tmux-bootstrap: no clusters file at $clusters_file, skipping clusters" >&2
+  fi
+fi
+
+target=${1:-dotfiles}
+if [[ -n ${TMUX:-} ]]; then
+  tmux switch-client -t "=$target"
+else
+  exec tmux attach-session -t "=$target"
+fi

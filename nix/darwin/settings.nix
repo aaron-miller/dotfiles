@@ -36,7 +36,7 @@
         persistent-apps = [
           "/Applications/Safari.app"
           "/Applications/Firefox.app"
-          "/Applications/Ghostty.app"
+          "/Applications/WezTerm.app"
           "/System/Applications/Messages.app"
           "/System/Applications/Mail.app"
           "/System/Applications/Calendar.app"

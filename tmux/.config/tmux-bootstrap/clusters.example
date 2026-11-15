@@ -1,0 +1,12 @@
+# Clusters for tmux-bootstrap: one "name context" pair per line.
+#
+#   name     window name in the clusters session
+#   context  kubectl context passed to k9s --context
+#
+# Copy this file to "clusters" in the same directory and edit it. The real
+# clusters file is gitignored, so your cluster names stay out of source control.
+# Blank lines and lines starting with # are skipped.
+
+dev      dev-cluster
+staging  staging-cluster
+prod     prod-cluster

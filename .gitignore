@@ -10,3 +10,4 @@ pi/.pi/agent/bin/**
 opencode/.config/opencode/opencode-notifier-state.json
 opencode/.config/opencode/service.json
 pi/.pi/agent/models-store.json
+tmux/.config/tmux-bootstrap/clusters
