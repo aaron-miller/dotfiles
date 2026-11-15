@@ -61,4 +61,4 @@ for profile in /etc/profiles/per-user/$USER ~/.nix-profile; do
 done
 source <(fzf --zsh)
 
-eval "$(devenv hook zsh)"
+eval "$(devenv hook zsh -- --quiet)"
