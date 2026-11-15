@@ -5,6 +5,7 @@
   home.packages = with pkgs; [
     xclip
     wl-clipboard
+    zsh
   ];
 
   # Flakes are off by default on a plain Nix install. This file turns them on

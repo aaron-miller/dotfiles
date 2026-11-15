@@ -44,6 +44,11 @@ if wezterm.target_triple == "aarch64-apple-darwin" then
 	config.window_decorations = "RESIZE"
 end
 
+-- start a login zsh from the nix profile on linux
+if wezterm.target_triple:find("linux") then
+	config.default_prog = { wezterm.home_dir .. "/.nix-profile/bin/zsh", "-l" }
+end
+
 -- pi keybinds
 config.enable_kitty_keyboard = true
 
