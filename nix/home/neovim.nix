@@ -15,6 +15,7 @@
       nodejs
       go
       python3
+      cargo
 
       # Go
       # gopls
