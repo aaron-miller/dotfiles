@@ -9,22 +9,33 @@ dotfiles=$HOME/.dotfiles
 
 has() { tmux has-session -t "=$1" 2>/dev/null; }
 
+# Store a pane's name in a user option that programs running in the pane can't overwrite.
+name_pane() { tmux set-option -p -t "$1" @name "$2"; }
+
+# Run a command, then drop to a login shell when it exits so the window stays open.
+then_shell() { printf '%s; exec %s -l' "$1" "${SHELL:-/bin/sh}"; }
+
 if ! has dotfiles; then
-  tmux new-session -d -s dotfiles -n dotfiles -c "$dotfiles" opencode
-  tmux split-window -h -t dotfiles: -c "$dotfiles" nvim
+  pane=$(tmux new-session -d -s dotfiles -n dotfiles -c "$dotfiles" -P -F '#{pane_id}' "$(then_shell nvim)")
+  name_pane "$pane" nvim
+  pane=$(tmux split-window -h -t dotfiles: -c "$dotfiles" -P -F '#{pane_id}' "$(then_shell opencode)")
+  name_pane "$pane" opencode
 fi
 
 if ! has general; then
-  tmux new-session -d -s general -n aerc -c "$HOME" aerc
-  tmux new-window -d -t general: -n newsboat -c "$HOME" newsboat
-  tmux new-window -d -t general: -n rmpc -c "$HOME" rmpc
+  pane=$(tmux new-session -d -s general -n email -c "$HOME" -P -F '#{pane_id}' "$(then_shell aerc)")
+  name_pane "$pane" aerc
+  pane=$(tmux new-window -d -t general: -n rss -c "$HOME" -P -F '#{pane_id}' "$(then_shell newsboat)")
+  name_pane "$pane" newsboat
+  pane=$(tmux new-window -d -t general: -n music -c "$HOME" -P -F '#{pane_id}' "$(then_shell rmpc)")
+  name_pane "$pane" rmpc
 fi
 
 if ! has chat; then
   # Alt+Shift+1-0 jump to weechat buffers 11-20. tmux doesn't bind these, so they reach weechat.
   weechat_keys='/key bind meta-! /buffer *11;/key bind meta-@ /buffer *12;/key bind meta-# /buffer *13;/key bind meta-$ /buffer *14;/key bind meta-% /buffer *15;/key bind meta-^ /buffer *16;/key bind meta-& /buffer *17;/key bind meta-* /buffer *18;/key bind meta-( /buffer *19;/key bind meta-) /buffer *20'
-  tmux new-session -d -s chat -n weechat -c "$HOME" "weechat -r $(printf %q "$weechat_keys")"
-  tmux new-window -d -t chat: -n profanity -c "$HOME" profanity
+  pane=$(tmux new-session -d -s chat -n irc -c "$HOME" -P -F '#{pane_id}' "$(then_shell "weechat -r $(printf %q "$weechat_keys")")")
+  name_pane "$pane" weechat
 fi
 
 if ! has clusters; then
@@ -33,13 +44,14 @@ if ! has clusters; then
     while read -r name context; do
       [[ -z $name || $name == \#* ]] && continue
       [[ -n $context ]] || { echo "tmux-bootstrap: no context for '$name' in $clusters_file" >&2; exit 1; }
-      cmd="k9s --context $(printf %q "$context")"
+      cmd=$(then_shell "k9s --context $(printf %q "$context")")
       if (( first )); then
-        tmux new-session -d -s clusters -n "$name" -c "$HOME" "$cmd"
+        pane=$(tmux new-session -d -s clusters -n "$name" -c "$HOME" -P -F '#{pane_id}' "$cmd")
         first=0
       else
-        tmux new-window -d -t clusters: -n "$name" -c "$HOME" "$cmd"
+        pane=$(tmux new-window -d -t clusters: -n "$name" -c "$HOME" -P -F '#{pane_id}' "$cmd")
       fi
+      name_pane "$pane" "$name"
     done < "$clusters_file"
   else
     echo "tmux-bootstrap: no clusters file at $clusters_file, skipping clusters" >&2
@@ -49,6 +61,6 @@ fi
 target=${1:-dotfiles}
 if [[ -n ${TMUX:-} ]]; then
   tmux switch-client -t "=$target"
-else
+elif [[ -t 0 ]]; then
   exec tmux attach-session -t "=$target"
 fi

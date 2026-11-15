@@ -48,6 +48,7 @@ in {
 
   config = {
     dotfiles.packages = [
+      "aerc"
       "curl"
       "devenv"
       "git"
