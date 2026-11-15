@@ -46,7 +46,7 @@
     (llm.withPlugins { llm-openrouter = true; })
 
     # Terminal apps (tmux-bootstrap sessions)
-    irssi
+    weechat
     profanity
     aerc
     newsboat

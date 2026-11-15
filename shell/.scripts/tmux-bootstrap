@@ -21,7 +21,9 @@ if ! has general; then
 fi
 
 if ! has chat; then
-  tmux new-session -d -s chat -n irssi -c "$HOME" irssi
+  # Alt+Shift+1-0 jump to weechat buffers 11-20. tmux doesn't bind these, so they reach weechat.
+  weechat_keys='/key bind meta-! /buffer *11;/key bind meta-@ /buffer *12;/key bind meta-# /buffer *13;/key bind meta-$ /buffer *14;/key bind meta-% /buffer *15;/key bind meta-^ /buffer *16;/key bind meta-& /buffer *17;/key bind meta-* /buffer *18;/key bind meta-( /buffer *19;/key bind meta-) /buffer *20'
+  tmux new-session -d -s chat -n weechat -c "$HOME" "weechat -r $(printf %q "$weechat_keys")"
   tmux new-window -d -t chat: -n profanity -c "$HOME" profanity
 fi
 

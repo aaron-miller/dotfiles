@@ -51,7 +51,6 @@ in {
       "curl"
       "devenv"
       "git"
-      "irssi"
       "nvim"
       "opencode"
       "pi"
