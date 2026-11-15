@@ -11,48 +11,10 @@
     withPython3 = true;
 
     extraPackages = with pkgs; [
-      # Runtimes
       nodejs
       go
       python3
       cargo
-
-      # Go
-      # gopls
-      # golangci-lint
-      # gotools
-      # gofumpt
-
-      # TypeScript and JavaScript
-      # vtsls
-      # prettier
-      # eslint
-
-      # Python
-      # pyright
-      # ruff
-
-      # Lua
-      # lua-language-server
-      # stylua
-
-      # Data and config formats
-      # vscode-langservers-extracted
-      # yaml-language-server
-      # taplo
-      # sqls
-
-      # Infra
-      # terraform-ls
-      # tflint
-      # helm-ls
-      # docker-language-server
-      #
-      # Docs
-      # marksman
-
-      # Nix
-      # nil
     ];
   };
 }
