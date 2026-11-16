@@ -5,6 +5,7 @@ local wezterm = require("wezterm")
 local config = wezterm.config_builder()
 
 -- This is where you actually apply your config choices
+config.audible_bell = "Disabled"
 
 -- fix shift + enter on opencode
 config.keys = {
