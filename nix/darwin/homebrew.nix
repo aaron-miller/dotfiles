@@ -1,6 +1,33 @@
-# GUI apps and the few formulae nixpkgs doesn't provide. Homebrew is installed
-# and managed by nix-homebrew (see nix/darwin/default.nix).
-{ inputs, primaryUser, ... }:
+# GUI apps and CLI tools managed by Homebrew through nix-homebrew.
+{ inputs, hostName, primaryUser, ... }:
+let
+  # Put formulae and casks shared by the Macs in the lists below. Host-only
+  # Homebrew packages belong in the matching list here.
+  hostHomebrew = {
+    proteus = {
+      brews = [ ];
+      casks = [
+        "calibre"
+        "discord"
+        "transmit"
+        "sublime-text"
+        "steam"
+      ];
+    };
+    scout = {
+      brews = [
+        "aqua"
+        "crossplane"
+        "jira-cli"
+        "kargo"
+        "upbound/tap/up"
+      ];
+      casks = [
+      ];
+    };
+  };
+  hostHomebrewPackages = hostHomebrew.${hostName};
+in
 {
   home-manager.users.${primaryUser}.home.file.".zfunc/_brew".source =
     "${inputs.brew-src}/completions/zsh/_brew";
@@ -16,39 +43,32 @@
       cleanup = "none";
     };
 
-    # Formulae from third-party taps, which nixpkgs doesn't provide.
+    # CLI tools intentionally managed by Homebrew.
     brews = [
-      # Not installed system-wide on macOS.
       "telnet"
-    ];
+    ] ++ hostHomebrewPackages.brews;
 
     taps = [
       "nikitabobko/tap"
+      "upbound/tap"
     ];
 
     casks = [
       "1password"
       "aerospace"
-      "calibre"
       "dbeaver-community"
-      "discord"
       "dotnet-sdk"
       "firefox"
       "firefox@developer-edition"
       "font-hack-nerd-font"
       "font-inconsolata-go-nerd-font"
       "google-chrome"
-      "mullvad-vpn"
       "obsidian"
       "sanesidebuttons"
-      "slack"
       "smcfancontrol"
-      "steam"
-      "sublime-text"
-      "transmit"
       "unnaturalscrollwheels"
       "vlc"
       "wezterm"
-    ];
+    ] ++ hostHomebrewPackages.casks;
   };
 }

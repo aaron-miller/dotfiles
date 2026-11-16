@@ -22,7 +22,16 @@
 
   outputs = { self, nixpkgs, home-manager, nix-darwin, nix-homebrew, ... }@inputs:
     let
-      primaryUser = "aaron";
+      darwinHosts = {
+        proteus = {
+          primaryUser = "aaron";
+          system = "aarch64-darwin";
+        };
+        scout = {
+          primaryUser = "aaron.miller";
+          system = "aarch64-darwin";
+        };
+      };
 
       # One entry per Linux machine. The key is the home-manager config name
       # (`home-manager switch --flake ~/.dotfiles#<key>`).
@@ -38,16 +47,23 @@
         config.allowUnfree = true;
       };
     in {
-      darwinConfigurations.proteus = nix-darwin.lib.darwinSystem {
-        system = "aarch64-darwin";
-        specialArgs = { inherit inputs self primaryUser; };
-        modules = [ ./nix/darwin ];
-      };
+      darwinConfigurations = nixpkgs.lib.mapAttrs (hostName: host:
+        nix-darwin.lib.darwinSystem {
+          inherit (host) system;
+          specialArgs = {
+            inherit inputs self hostName;
+            primaryUser = host.primaryUser;
+          };
+          modules = [ ./nix/darwin ];
+        }) darwinHosts;
 
       homeConfigurations = nixpkgs.lib.mapAttrs (_: host:
         home-manager.lib.homeManagerConfiguration {
           pkgs = mkPkgs host.system;
-          extraSpecialArgs = { primaryUser = host.username; };
+          extraSpecialArgs = {
+            hostName = "linux";
+            primaryUser = host.username;
+          };
           modules = [
             ./nix/home
             ./nix/home/linux.nix

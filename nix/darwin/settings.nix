@@ -33,18 +33,6 @@
         expose-group-apps = true;
         wvous-br-corner = 14; # bottom-right hot corner: Quick Note
 
-        persistent-apps = [
-          "/Applications/Safari.app"
-          "/Applications/Firefox.app"
-          "/Applications/WezTerm.app"
-          "/System/Applications/Messages.app"
-          "/System/Applications/Mail.app"
-          "/System/Applications/Calendar.app"
-          "/System/Applications/Notes.app"
-          "/Applications/Obsidian.app"
-          "/System/Applications/Reminders.app"
-        ];
-
         persistent-others = [
           { folder = { path = "/Applications"; displayas = "folder"; }; }
           { folder = { path = "/Users/${primaryUser}/Documents"; displayas = "folder"; showas = "list"; }; }

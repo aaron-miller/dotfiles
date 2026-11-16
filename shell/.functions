@@ -1,7 +1,7 @@
-# nix - rebuild the system for this host (LocalHostName is the stable name)
+# nix - rebuild the system for this host
 rebuild() {
   case "$OSTYPE" in
-    darwin*) sudo darwin-rebuild switch --flake ~/.dotfiles#"$(scutil --get LocalHostName)" ;;
+    darwin*) sudo darwin-rebuild switch --flake ~/.dotfiles#scout ;;
     linux*) home-manager switch --flake ~/.dotfiles#aaron@linux ;;
     *) echo "rebuild: unsupported OS: $OSTYPE" >&2; return 1 ;;
   esac

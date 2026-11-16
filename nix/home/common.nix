@@ -1,7 +1,16 @@
 # Shared home-manager config for every machine (macOS and Linux).
-{ pkgs, ... }:
+{ pkgs, hostName, ... }:
+let
+  # Put packages common to the Macs in home.packages below. Host-only packages
+  # belong in the matching list here; Linux uses its separate module.
+  hostPackages = {
+    proteus = with pkgs; [ ];
+    scout = with pkgs; [ ];
+    linux = with pkgs; [ ];
+  };
+in
 {
-  home.packages = with pkgs; [
+  home.packages = (with pkgs; [
     # Editors
     vim
 
@@ -18,6 +27,7 @@
     gh
     curl
     wget
+    awscli2
 
     # Core CLI
     bat
@@ -31,13 +41,20 @@
     ffmpeg
     exiftool
 
+    # k8s
+
+
     podman
     lazydocker
-    lazygit
+    kubectx
+    kubectl
+    kubernetes-helm
+    argocd
 
     # Development
     go-task
     devenv
+    lazygit
 
     # AI tools
     opencode
@@ -52,5 +69,5 @@
     newsboat
     rmpc
     k9s
-  ];
+  ]) ++ hostPackages.${hostName};
 }

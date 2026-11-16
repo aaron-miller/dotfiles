@@ -16,11 +16,11 @@ sudo mv /etc/nix/nix.conf /etc/nix/nix.conf.before-nix-darwin
 Then run the first switch with flakes enabled for that one command:
 
 ```bash
-nix --extra-experimental-features 'nix-command flakes' run nix-darwin -- \
-  switch --flake ~/.dotfiles#{HOSTNAME}
+sudo nix --extra-experimental-features 'nix-command flakes' run nix-darwin -- \
+  switch --flake ~/.dotfiles#scout
 ```
 
-Later rebuilds use `darwin-rebuild switch --flake ~/.dotfiles#{HOSTNAME}`.
+Later rebuilds use `sudo darwin-rebuild switch --flake ~/.dotfiles#scout`.
 
 ## First-time setup on Linux
 

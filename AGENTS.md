@@ -13,9 +13,9 @@ Personal dotfiles managed with Nix flakes (nix-darwin on macOS, home-manager on 
 
 ## Commands
 
-- Evaluate the Mac config (no activation): `nix eval --raw '.#darwinConfigurations.proteus.config.system.build.toplevel.drvPath'`
+- Evaluate the Mac config (no activation): `nix eval --raw '.#darwinConfigurations.scout.config.system.build.toplevel.drvPath'`
 - Evaluate a Linux config: `nix eval --raw '.#homeConfigurations."aaron@linux".activationPackage.drvPath'`
-- Apply on macOS: `sudo darwin-rebuild switch --flake ~/.dotfiles#proteus` (must run as root)
+- Apply on macOS: `sudo darwin-rebuild switch --flake ~/.dotfiles#scout` (must run as root)
 - Apply on Linux: `home-manager switch --flake ~/.dotfiles#aaron@linux`
 - Update pinned inputs: `nix flake update`, then commit `flake.lock`.
 

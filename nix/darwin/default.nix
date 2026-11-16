@@ -1,5 +1,5 @@
-# nix-darwin config for the Mac (hostname: proteus).
-{ inputs, self, primaryUser, ... }:
+# Shared nix-darwin config for the macOS hosts.
+{ inputs, self, hostName, primaryUser, ... }:
 {
   imports = [
     ./homebrew.nix
@@ -39,7 +39,7 @@
     useUserPackages = true;
     # Existing files that block a link are moved aside as <name>.hm-backup.
     backupFileExtension = "hm-backup";
-    extraSpecialArgs = { inherit primaryUser; };
+    extraSpecialArgs = { inherit hostName primaryUser; };
 
     users.${primaryUser} = {
       imports = [ ../home ];
