@@ -8,6 +8,8 @@
     zsh
   ];
 
+  programs.home-manager.enable = true;
+
   # Flakes are off by default on a plain Nix install. This file turns them on
   # for every machine, so `home-manager switch --flake` works after bootstrap.
   xdg.configFile."nix/nix.conf".text = ''
