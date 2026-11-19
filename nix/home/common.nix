@@ -54,6 +54,7 @@ in
     # Development
     go-task
     devenv
+    devbox
     lazygit
 
     # AI tools
