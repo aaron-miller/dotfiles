@@ -19,7 +19,12 @@
 
 [user]
 	name = Aaron Miller
-	email = "aaron@aaron-miller.net"
+
+# Email differs per machine. Create ~/.config/git/identity on each machine with:
+#   [user]
+#   	email = <address>
+[include]
+	path = ~/.config/git/identity
 
 [init]
 	defaultBranch = main

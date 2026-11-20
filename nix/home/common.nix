@@ -1,16 +1,15 @@
 # Shared home-manager config for every machine (macOS and Linux).
-{ pkgs, hostName, ... }:
-let
-  # Put packages common to the Macs in home.packages below. Host-only packages
-  # belong in the matching list here; Linux uses its separate module.
-  hostPackages = {
-    proteus = with pkgs; [ ];
-    scout = with pkgs; [ ];
-    linux = with pkgs; [ ];
-  };
-in
+{ pkgs, ... }:
 {
-  home.packages = (with pkgs; [
+  programs.home-manager.enable = true;
+
+  # Flakes are off by default on a plain Nix install. This turns them on for
+  # the nix CLI on every machine, so `home-manager switch --flake` works.
+  xdg.configFile."nix/nix.conf".text = ''
+    experimental-features = nix-command flakes
+  '';
+
+  dotfiles.homePackages = with pkgs; [
     # Editors
     vim
 
@@ -70,5 +69,5 @@ in
     newsboat
     rmpc
     k9s
-  ]) ++ hostPackages.${hostName};
+  ];
 }

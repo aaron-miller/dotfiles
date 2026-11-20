@@ -1,8 +1,14 @@
-# nix - rebuild the system for this host
+# nix - rebuild this host. The flake keys are the machines' hostnames.
 rebuild() {
+  local host
   case "$OSTYPE" in
-    darwin*) sudo darwin-rebuild switch --flake ~/.dotfiles#scout ;;
-    linux*) home-manager switch --flake ~/.dotfiles#aaron@linux ;;
+    darwin*)
+      host=$(scutil --get LocalHostName) || return 1
+      home-manager switch --flake ~/.dotfiles#"$USER@$host" &&
+        sudo darwin-rebuild switch --flake ~/.dotfiles#"$host" ;;
+    linux*)
+      host=$(hostname -s)
+      home-manager switch --flake ~/.dotfiles#"$USER@$host" ;;
     *) echo "rebuild: unsupported OS: $OSTYPE" >&2; return 1 ;;
   esac
 }

@@ -1,11 +1,12 @@
-# Home-manager config shared by every machine. Imported by nix/darwin/default.nix
-# on macOS and by flake.nix for Linux.
+# Home-manager config shared by every machine. Imported by flake.nix for each
+# host, alongside its platform module and role profile.
 { primaryUser, ... }:
 {
   imports = [
     ./common.nix
     ./files.nix
     ./neovim.nix
+    ./packages.nix
   ];
 
   home = {

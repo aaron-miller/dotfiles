@@ -1,10 +1,9 @@
 # Shared nix-darwin config for the macOS hosts.
-{ inputs, self, hostName, primaryUser, ... }:
+{ inputs, self, primaryUser, ... }:
 {
   imports = [
     ./homebrew.nix
     ./settings.nix
-    inputs.home-manager.darwinModules.home-manager
     inputs.nix-homebrew.darwinModules.nix-homebrew
   ];
 
@@ -30,21 +29,7 @@
     enable = true;
     user = primaryUser;
     autoMigrate = true;
-    # Keeps `brew shellenv` out of /etc/zshrc. Completions come from nix/home/zfunc below.
+    # Keeps `brew shellenv` out of /etc/zshrc. Completions come from nix/home/darwin.nix.
     enableZshIntegration = false;
-  };
-
-  home-manager = {
-    useGlobalPkgs = true;
-    useUserPackages = true;
-    # Existing files that block a link are moved aside as <name>.hm-backup.
-    backupFileExtension = "hm-backup";
-    extraSpecialArgs = { inherit hostName primaryUser; };
-
-    users.${primaryUser} = {
-      imports = [ ../home ];
-
-      dotfiles.packages = [ "aerospace" ];
-    };
   };
 }

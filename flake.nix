@@ -22,57 +22,75 @@
 
   outputs = { self, nixpkgs, home-manager, nix-darwin, nix-homebrew, ... }@inputs:
     let
-      darwinHosts = {
+      inherit (nixpkgs) lib;
+
+      # One entry per machine. The key is the hostname, which is also the
+      # name of its file in nix/hosts/. `role` picks a profile from
+      # nix/home/profiles/ and is optional.
+      hosts = {
         proteus = {
-          primaryUser = "aaron";
           system = "aarch64-darwin";
+          user = "aaron";
         };
-        scout = {
-          primaryUser = "aaron.miller";
+        work = {
           system = "aarch64-darwin";
+          user = "aaron.miller";
+        };
+        neptune = {
+          system = "x86_64-linux";
+          user = "aaron";
+          role = "desktop";
+        };
+        thinkpad = {
+          system = "x86_64-linux";
+          user = "aaron";
+          role = "desktop";
+        };
+        ubuntu = {
+          system = "x86_64-linux";
+          user = "aaron";
+          role = "headless";
         };
       };
 
-      # One entry per Linux machine. The key is the home-manager config name
-      # (`home-manager switch --flake ~/.dotfiles#<key>`).
-      linuxHosts = {
-        "aaron@linux" = {
-          username = "aaron";
-          system = "x86_64-linux";
-        };
-      };
+      isDarwin = host: lib.hasSuffix "-darwin" host.system;
 
       mkPkgs = system: import nixpkgs {
         inherit system;
         config.allowUnfree = true;
       };
+
+      mkHome = name: host: home-manager.lib.homeManagerConfiguration {
+        pkgs = mkPkgs host.system;
+        extraSpecialArgs = {
+          inherit inputs;
+          hostName = name;
+          primaryUser = host.user;
+        };
+        modules = [
+          ./nix/home
+          (if isDarwin host then ./nix/home/darwin.nix else ./nix/home/linux.nix)
+          (./nix/hosts + "/${name}.nix")
+          {
+            home.homeDirectory =
+              if isDarwin host then "/Users/${host.user}" else "/home/${host.user}";
+          }
+        ] ++ lib.optional (host ? role) (./nix/home/profiles + "/${host.role}.nix");
+      };
     in {
-      darwinConfigurations = nixpkgs.lib.mapAttrs (hostName: host:
+      darwinConfigurations = lib.mapAttrs (name: host:
         nix-darwin.lib.darwinSystem {
           inherit (host) system;
           specialArgs = {
-            inherit inputs self hostName;
-            primaryUser = host.primaryUser;
+            inherit inputs self;
+            hostName = name;
+            primaryUser = host.user;
           };
           modules = [ ./nix/darwin ];
-        }) darwinHosts;
+        }) (lib.filterAttrs (_: isDarwin) hosts);
 
-      homeConfigurations = nixpkgs.lib.mapAttrs (_: host:
-        home-manager.lib.homeManagerConfiguration {
-          pkgs = mkPkgs host.system;
-          extraSpecialArgs = {
-            hostName = "linux";
-            primaryUser = host.username;
-          };
-          modules = [
-            ./nix/home
-            ./nix/home/linux.nix
-            {
-              home = {
-                homeDirectory = "/home/${host.username}";
-              };
-            }
-          ];
-        }) linuxHosts;
+      # Keyed as user@host, e.g. `home-manager switch --flake ~/.dotfiles#aaron@neptune`.
+      homeConfigurations = lib.mapAttrs' (name: host:
+        lib.nameValuePair "${host.user}@${name}" (mkHome name host)) hosts;
     };
 }

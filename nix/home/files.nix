@@ -37,16 +37,32 @@ let
     source = config.lib.file.mkOutOfStoreSymlink "${dotfilesDir}/${rel}";
   };
 
+  # Package dirs linked on this host: dotfiles.packages minus the excluded ones.
+  activePackages = lib.filter (p: !lib.elem p cfg.excludeDotfiles) cfg.packages;
+
   inPackages = rel:
-    builtins.elem (builtins.head (lib.splitString "/" rel)) cfg.packages;
+    builtins.elem (builtins.head (lib.splitString "/" rel)) activePackages;
 in {
-  options.dotfiles.packages = lib.mkOption {
-    type = lib.types.listOf lib.types.str;
-    default = [ ];
-    description = "Package directories in the repo to link into $HOME.";
+  options.dotfiles = {
+    packages = lib.mkOption {
+      type = lib.types.listOf lib.types.str;
+      default = [ ];
+      description = "Package directories in the repo to link into $HOME.";
+    };
+
+    excludeDotfiles = lib.mkOption {
+      type = lib.types.listOf lib.types.str;
+      default = [ ];
+      description = "Package directories from dotfiles.packages to skip on this host.";
+    };
   };
 
   config = {
+    assertions = [{
+      assertion = lib.all (p: lib.elem p cfg.packages) cfg.excludeDotfiles;
+      message = "dotfiles.excludeDotfiles has names not in dotfiles.packages: ${lib.concatStringsSep ", " (lib.filter (p: !lib.elem p cfg.packages) cfg.excludeDotfiles)}";
+    }];
+
     dotfiles.packages = [
       "aerc"
       "curl"
@@ -67,7 +83,7 @@ in {
     ];
 
     home.file = builtins.listToAttrs (map linkOf (lib.unique (
-      lib.concatMap listFiles cfg.packages
+      lib.concatMap listFiles activePackages
       ++ lib.filter inPackages linkedDirs
     )));
   };

@@ -17,10 +17,10 @@ Then run the first switch with flakes enabled for that one command:
 
 ```bash
 sudo nix --extra-experimental-features 'nix-command flakes' run nix-darwin -- \
-  switch --flake ~/.dotfiles#scout
+  switch --flake ~/.dotfiles#work
 ```
 
-Later rebuilds use `sudo darwin-rebuild switch --flake ~/.dotfiles#scout`.
+Later rebuilds use `sudo darwin-rebuild switch --flake ~/.dotfiles#work`.
 
 ## First-time setup on Linux
 

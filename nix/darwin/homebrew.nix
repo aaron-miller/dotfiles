@@ -1,5 +1,5 @@
 # GUI apps and CLI tools managed by Homebrew through nix-homebrew.
-{ inputs, hostName, primaryUser, ... }:
+{ hostName, ... }:
 let
   # Put formulae and casks shared by the Macs in the lists below. Host-only
   # Homebrew packages belong in the matching list here.
@@ -14,7 +14,7 @@ let
         "steam"
       ];
     };
-    scout = {
+    work = {
       brews = [
         "aqua"
         "crossplane"
@@ -29,9 +29,6 @@ let
   hostHomebrewPackages = hostHomebrew.${hostName};
 in
 {
-  home-manager.users.${primaryUser}.home.file.".zfunc/_brew".source =
-    "${inputs.brew-src}/completions/zsh/_brew";
-
   homebrew = {
     enable = true;
 
