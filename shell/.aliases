@@ -54,6 +54,7 @@ alias dotzr="nvim ~/.dotfiles/zsh/.zshrc"
 
 alias nrs="rebuild"
 alias nfu="(cd ~/.dotfiles && nix flake update)"
+alias hm='home-manager switch --flake ~/.dotfiles#"$HM_FLAKE_TARGET"'
 
 alias ai='noglob ask-llm'
 

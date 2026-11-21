@@ -13,7 +13,7 @@ Personal dotfiles managed with Nix flakes (nix-darwin on macOS, home-manager on 
   - `nix/home/profiles/<role>.nix`, if the host has a `role` (`desktop` or `headless`).
   - `nix/hosts/<hostname>.nix`, for that machine's overrides.
 - Shared packages go in `nix/home/common.nix` (both OSes), `nix/home/linux.nix` (Linux only), or `nix/home/darwin.nix` (Mac only). Add them to `dotfiles.homePackages`. A host drops one with `dotfiles.excludeHomePackages = [ "name" ]`, and drops a dotfile package with `dotfiles.excludeDotfiles = [ "wezterm" ]`. Both lists are checked, so a misspelled name fails the evaluation.
-- Mac GUI apps and taps go in `nix/darwin/homebrew.nix`. macOS defaults go in `nix/darwin/settings.nix`. Prefer nixpkgs over brew.
+- Mac GUI apps and taps go in `nix/darwin/homebrew.nix`, or in `nix/darwin/hosts/<hostname>.nix` for a single Mac. macOS defaults go in `nix/darwin/settings.nix`. Prefer nixpkgs over brew.
 - `linkedDirs` in `nix/home/files.nix` lists gitignored directories that are linked whole (plugins and runtime state). Add to it when a gitignored directory must exist in `$HOME`.
 - Commit subjects are short, lowercase, imperative (e.g. `disable ghostty blinking cursor`). Branch: `main`.
 

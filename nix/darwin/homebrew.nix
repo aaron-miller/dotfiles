@@ -1,33 +1,6 @@
-# GUI apps and CLI tools managed by Homebrew through nix-homebrew.
-{ hostName, ... }:
-let
-  # Put formulae and casks shared by the Macs in the lists below. Host-only
-  # Homebrew packages belong in the matching list here.
-  hostHomebrew = {
-    proteus = {
-      brews = [ ];
-      casks = [
-        "calibre"
-        "discord"
-        "transmit"
-        "sublime-text"
-        "steam"
-      ];
-    };
-    work = {
-      brews = [
-        "aqua"
-        "crossplane"
-        "jira-cli"
-        "kargo"
-        "upbound/tap/up"
-      ];
-      casks = [
-      ];
-    };
-  };
-  hostHomebrewPackages = hostHomebrew.${hostName};
-in
+# GUI apps and CLI tools managed by Homebrew through nix-homebrew. Packages
+# shared by every Mac go here; host-only packages go in nix/darwin/hosts/.
+{ ... }:
 {
   homebrew = {
     enable = true;
@@ -43,7 +16,7 @@ in
     # CLI tools intentionally managed by Homebrew.
     brews = [
       "telnet"
-    ] ++ hostHomebrewPackages.brews;
+    ];
 
     taps = [
       "nikitabobko/tap"
@@ -66,6 +39,6 @@ in
       "unnaturalscrollwheels"
       "vlc"
       "wezterm"
-    ] ++ hostHomebrewPackages.casks;
+    ];
   };
 }

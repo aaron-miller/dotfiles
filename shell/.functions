@@ -1,16 +1,14 @@
-# nix - rebuild this host. The flake keys are the machines' hostnames.
+# rebuild - nix-darwin system switch for DARWIN_FLAKE_TARGET (macOS only).
 rebuild() {
-  local host
-  case "$OSTYPE" in
-    darwin*)
-      host=$(scutil --get LocalHostName) || return 1
-      home-manager switch --flake ~/.dotfiles#"$USER@$host" &&
-        sudo darwin-rebuild switch --flake ~/.dotfiles#"$host" ;;
-    linux*)
-      host=$(hostname -s)
-      home-manager switch --flake ~/.dotfiles#"$USER@$host" ;;
-    *) echo "rebuild: unsupported OS: $OSTYPE" >&2; return 1 ;;
-  esac
+  if [[ $OSTYPE != darwin* ]]; then
+    echo "rebuild: nix-darwin only, not supported on $OSTYPE" >&2
+    return 1
+  fi
+  if [[ -z "$DARWIN_FLAKE_TARGET" ]]; then
+    echo "rebuild: DARWIN_FLAKE_TARGET is not set (e.g. work)" >&2
+    return 1
+  fi
+  sudo darwin-rebuild switch --flake ~/.dotfiles#"$DARWIN_FLAKE_TARGET"
 }
 
 # aws

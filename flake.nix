@@ -86,7 +86,10 @@
             hostName = name;
             primaryUser = host.user;
           };
-          modules = [ ./nix/darwin ];
+          modules = [
+            ./nix/darwin
+            (./nix/darwin/hosts + "/${name}.nix")
+          ];
         }) (lib.filterAttrs (_: isDarwin) hosts);
 
       # Keyed as user@host, e.g. `home-manager switch --flake ~/.dotfiles#aaron@neptune`.
