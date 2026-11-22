@@ -12,8 +12,20 @@
   },
   "session": {
     "sidebar": "hide",
-    "scrollbar": false,
-    "thinking": "hide"
+    "scrollbar": true,
+    "thinking": "hide",
+    "submit_scroll": "bottom",
+    "markdown": "rendered",
+    "grouping": "auto",
+    "verbosity": "low",
+    "image_preview": false,
+    "new_location": "launch",
+    "permissions": "prompt"
   },
-  "animations": true
+  "animations": true,
+  "attention": {
+    "sound": true,
+    "notifications": true
+  },
+  "highlights": false
 }
