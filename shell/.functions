@@ -42,14 +42,14 @@ _wt_pick() {
     echo "no spaces found" >&2
     return 1
   fi
-  print -r -- "$list" | fzf --height 40% --prompt="$1"
+  printf '%s\n' "$list" | fzf --height 40% --prompt="$1"
 }
 
 # prints the workspace name if $PWD is under ~/wrk
 _ws_current() {
   [[ $PWD == "$HOME"/wrk/* ]] || return 1
   local rel=${PWD#"$HOME"/wrk/}
-  print -r -- "${rel%%/*}"
+  printf '%s\n' "${rel%%/*}"
 }
 
 # create (if needed) and attach to a workspace - usage: ws [<ticket>]
@@ -85,13 +85,14 @@ mkwt() {
   local desc=$1 ws repo dest common
   common=$(git rev-parse --path-format=absolute --git-common-dir 2>/dev/null) \
     || { echo "mkwt: not inside a git repo" >&2; return 1; }
-  repo=${common:h:t}
+  repo=$(basename "$(dirname "$common")")
 
   ws=$(_ws_current) || ws=$(workflow workspace ls | fzf --height 40% --prompt="workspace> " | cut -f1) || return
   [[ -n $ws ]] || return 1
 
   if [[ -z $desc ]]; then
-    read "desc?desc> " || return
+    printf 'desc> ' >&2
+    read -r desc || return
   fi
   [[ -n $desc ]] || { echo "mkwt: no desc given" >&2; return 1; }
 
@@ -105,7 +106,7 @@ rmwt() {
   dest=$(_wt_pick "remove> ") || return
   [[ -n $dest ]] || return 1
   common=$(git -C "$dest" rev-parse --path-format=absolute --git-common-dir 2>/dev/null) || return
-  main=${common:h}
+  main=$(dirname "$common")
   worktree rm "$dest" || return
   if [[ $PWD == "$dest" || $PWD == "$dest"/* ]]; then
     cd "$main"

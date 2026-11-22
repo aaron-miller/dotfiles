@@ -4,5 +4,8 @@
 {
   dotfiles.homePackages = with pkgs; [
     zsh
+    bash-completion
   ];
+
+  dotfiles.packages = [ "bash" ];
 }
